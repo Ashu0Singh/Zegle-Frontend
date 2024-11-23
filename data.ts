@@ -6,19 +6,19 @@ export const meta: Metadata = {
         "Zegle is a platform that is inspired by the idea of Omeagle, except is has better UI and works towards getting rid of ads",
 };
 
-export const SidebarRoutes = {
+export const NavbarRoutes = {
     routes: [
         {
             text: "Home",
             route: "/",
         },
         {
-            text: "Video Chat",
+            text: "Chat",
             route: "/chat",
         },
         {
-            text: "Friends",
-            route: "/friends",
+            text: "Pricing",
+            route: "/pricing",
         },
     ],
 };

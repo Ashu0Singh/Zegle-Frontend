@@ -2,10 +2,8 @@
 @tailwind components;
 @tailwind utilities;
 
-body {}
-
-.zegle {
-    @apply font-extrabold text-2xl tracking-wider text-center
+body * {
+    @apply transition-colors duration-1000;
 }
 
 @layer base {
@@ -30,14 +28,7 @@ body {}
         --input: 262.1 30% 18%;
         --ring: 262.1 88.3% 57.8%;
         --radius: 0.5rem;
-        --sidebar-background: 0 0% 98%;
-        --sidebar-foreground: 240 5.3% 26.1%;
-        --sidebar-primary: 240 5.9% 10%;
-        --sidebar-primary-foreground: 0 0% 98%;
-        --sidebar-accent: 240 4.8% 95.9%;
-        --sidebar-accent-foreground: 240 5.9% 10%;
-        --sidebar-border: 220 13% 91%;
-        --sidebar-ring: 217.2 91.2% 59.8%;
+        --transition-duration: 1s;
     }
 
     .dark {
@@ -61,14 +52,7 @@ body {}
         --input: 262.1 30% 18%;
         --ring: 262.1 88.3% 57.8%;
         --radius: 0.5rem;
-        --sidebar-background: 240 5.9% 10%;
-        --sidebar-foreground: 240 4.8% 95.9%;
-        --sidebar-primary: 224.3 76.3% 48%;
-        --sidebar-primary-foreground: 0 0% 100%;
-        --sidebar-accent: 240 3.7% 15.9%;
-        --sidebar-accent-foreground: 240 4.8% 95.9%;
-        --sidebar-border: 240 3.7% 15.9%;
-        --sidebar-ring: 217.2 91.2% 59.8%;
+        --transition-duration: 1s;
     }
 }
 
@@ -80,4 +64,39 @@ body {}
     body {
         @apply bg-background text-foreground;
     }
+}
+
+.theme-transition {
+    transition:
+        background-color var(--transition-duration),
+        color var(--transition-duration);
+}
+
+.zegle {
+    @apply p-4 w-full;
+}
+.zegle-header {
+    @apply text-2xl text-purple-500 font-bold;
+}
+.zegle-subtext {
+    @apply text-xs;
+}
+
+.navbar,
+.navbar-navigation,
+.navbar-navigation-routes,
+.navbar-navigation-buttons {
+    @apply flex gap-4 items-center;
+}
+
+.navbar-navigation-routes {
+    @apply flex items-center gap-6 text-sm xl:gap-8;
+}
+
+.navbar {
+    @apply p-4 gap-10 border-b-gray-500 border-b-2 border-opacity-15;
+}
+
+.navbar-navigation {
+    @apply w-full justify-between;
 }

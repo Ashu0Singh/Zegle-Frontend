@@ -67,30 +67,11 @@ export function Navbar() {
                 </Link>
             </div>
             {isMobile ? (
-                // <Drawer>
-                //     <DrawerTrigger>
-                //         <Menu />
-                //     </DrawerTrigger>
-                //     <DrawerContent>
-                //         <DrawerHeader>
-                //             <DrawerTitle>Are you absolutely sure?</DrawerTitle>
-                //             <DrawerDescription>
-                //                 This action cannot be undone.
-                //             </DrawerDescription>
-                //         </DrawerHeader>
-                //         <DrawerFooter>
-                //             <Button>Submit</Button>
-                //             <DrawerClose>
-                //                 <Button variant="outline">Cancel</Button>
-                //             </DrawerClose>
-                //         </DrawerFooter>
-                //     </DrawerContent>
-                // </Drawer>
                 <Dialog>
                     <DialogTrigger asChild className="cursor-pointer">
                         <Menu />
                     </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px]">
+                    <DialogContent className="sm:max-w-[425px] border-[1px]">
                         <DialogTitle className="text-center">Menu</DialogTitle>
                         <NavbarNavigation
                             theme={theme}
@@ -108,7 +89,6 @@ export function Navbar() {
     );
 }
 
-
 const NavbarNavigation: React.FC<NavbarNavigationProps> = (props) => {
     return (
         <div className="navbar-navigation">
@@ -121,7 +101,7 @@ const NavbarNavigation: React.FC<NavbarNavigationProps> = (props) => {
             </ul>
             <div className={`${GeistMono.className} navbar-navigation-buttons`}>
                 <Button
-                    className={`flex items-center space-x-2 bg-transparent hover:bg-transparent border-[1px] ${
+                    className={`navbar-navigation-buttons-themeSwitch items-center space-x-2 bg-transparent hover:bg-transparent border-[1px] ${
                         props.theme === "light" && "text-foreground"
                     }`}
                     onClick={props.handleThemeChange}
@@ -130,13 +110,19 @@ const NavbarNavigation: React.FC<NavbarNavigationProps> = (props) => {
                 </Button>
                 <Link
                     href="/login"
-                    className={buttonVariants({ variant: "default" })}
+                    className={
+                        buttonVariants({ variant: "default" }) +
+                        " navbar-navigation-buttons-login"
+                    }
                 >
                     Login
                 </Link>
                 <Link
                     href="/signup"
-                    className={buttonVariants({ variant: "default" })}
+                    className={
+                        buttonVariants({ variant: "default" }) +
+                        " navbar-navigation-buttons-signup"
+                    }
                 >
                     Sign Up
                 </Link>

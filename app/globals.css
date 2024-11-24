@@ -90,11 +90,7 @@ body {
 .navbar-navigation,
 .navbar-navigation-routes,
 .navbar-navigation-buttons {
-    @apply flex gap-4 items-center justify-between;
-}
-
-.navbar-navigation-routes {
-    @apply flex flex-col sm:flex-row items-center gap-6 text-sm xl:gap-8;
+    @apply flex gap-3 sm:gap-4 items-center justify-between;
 }
 
 .navbar {
@@ -103,4 +99,35 @@ body {
 
 .navbar-navigation {
     @apply w-full  flex-col sm:flex-row justify-between;
+}
+
+.navbar-navigation-routes {
+    @apply flex flex-col sm:flex-row items-center gap-6 text-sm font-bold sm:font-normal xl:gap-8 w-full sm:w-min;
+}
+
+@media only screen and (max-width: 640px) {
+    .navbar-navigation-buttons {
+        display: grid;
+        width: 80%;
+        gap: 0.5rem;
+        grid-template-areas:
+            "switch switch signup signup"
+            "login login login login";
+    }
+    .navbar-navigation-buttons-themeSwitch {
+        grid-area: switch;
+        width: 100%;
+    }
+    .navbar-navigation-buttons-signup {
+        grid-area: signup;
+        width: 100%;
+    }
+    .navbar-navigation-buttons-login {
+        grid-area: login;
+        width: 100%;
+    }
+}
+
+.navbar-navigation-routes-link {
+    @apply w-[80%] text-right sm:text-center border-b-[1px] sm:border-0;
 }

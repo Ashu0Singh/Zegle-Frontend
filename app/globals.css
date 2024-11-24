@@ -6,6 +6,10 @@ body * {
     @apply transition-colors duration-1000;
 }
 
+body {
+    @apply h-dvh flex flex-col;
+}
+
 @layer base {
     :root {
         --background: 262.1 100% 95%;
@@ -86,11 +90,11 @@ body * {
 .navbar-navigation,
 .navbar-navigation-routes,
 .navbar-navigation-buttons {
-    @apply flex gap-4 items-center;
+    @apply flex gap-4 items-center justify-between;
 }
 
 .navbar-navigation-routes {
-    @apply flex items-center gap-6 text-sm xl:gap-8;
+    @apply flex flex-col sm:flex-row items-center gap-6 text-sm xl:gap-8;
 }
 
 .navbar {
@@ -98,5 +102,5 @@ body * {
 }
 
 .navbar-navigation {
-    @apply w-full justify-between;
+    @apply w-full  flex-col sm:flex-row justify-between;
 }

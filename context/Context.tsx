@@ -31,27 +31,27 @@ export default function UserContextProvider({
 }) {
     const [socket, setSocket] = useState<Socket | null>(null);
 
-    useEffect(() => {
-        const connection = io("http://localhost:8080");
+    // useEffect(() => {
+    //     const connection = io("http://localhost:8080");
 
-        connection.on("connect", () => {
-            console.log("Connected to socket:", connection.id);
-        });
+    //     connection.on("connect", () => {
+    //         console.log("Connected to socket:", connection.id);
+    //     });
 
-        connection.on("disconnect", () => {
-            console.log("Disconnected from socket");
-        });
+    //     connection.on("disconnect", () => {
+    //         console.log("Disconnected from socket");
+    //     });
 
-        connection.on("connect_error", (err) => {
-            console.error(`Connection error: ${err.message}`);
-        });
+    //     connection.on("connect_error", (err) => {
+    //         console.error(`Connection error: ${err.message}`);
+    //     });
 
-        setSocket(connection);
+    //     setSocket(connection);
 
-        return () => {
-            connection.disconnect();
-        };
-    }, []);
+    //     return () => {
+    //         connection.disconnect();
+    //     };
+    // }, []);
 
     return <Context.Provider value={{ socket }}>{children}</Context.Provider>;
 }

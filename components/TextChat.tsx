@@ -8,7 +8,7 @@ const TextChat = () => {
             <Card className="chat-text-chatbox">
                 <CardHeader className="chat-text-chatbox-header">
                     <CardTitle>ashu.simgh</CardTitle>
-                    <EllipsisVerticalIcon/>
+                    <EllipsisVerticalIcon />
                 </CardHeader>
                 <CardContent>Chatbox</CardContent>
             </Card>

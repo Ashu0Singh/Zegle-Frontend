@@ -22,6 +22,6 @@
     @apply w-full border-b-[1px] p-4 flex flex-row justify-between items-center;
 }
 
-.lucide-ellipsis-vertical{
+.lucide-ellipsis-vertical {
     margin-top: 0px !important;
 }

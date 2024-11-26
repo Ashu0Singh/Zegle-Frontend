@@ -9,9 +9,6 @@ import { Menu, Moon, Sun } from "lucide-react";
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
@@ -21,6 +18,7 @@ interface NavbarNavigationProps {
     handleThemeChange: (
         event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     ) => void;
+    mounted: boolean | undefined;
 }
 
 export function Navbar() {
@@ -55,7 +53,7 @@ export function Navbar() {
         }, 1000);
     };
 
-    if (!mounted) return null;
+    // if (!mounted) return null;
 
     return (
         <nav className="navbar">
@@ -76,6 +74,7 @@ export function Navbar() {
                         <NavbarNavigation
                             theme={theme}
                             handleThemeChange={handleThemeChange}
+                            mounted={mounted}
                         />
                     </DialogContent>
                 </Dialog>
@@ -83,6 +82,7 @@ export function Navbar() {
                 <NavbarNavigation
                     theme={theme}
                     handleThemeChange={handleThemeChange}
+                    mounted={mounted}
                 />
             )}
         </nav>
@@ -99,15 +99,18 @@ const NavbarNavigation: React.FC<NavbarNavigationProps> = (props) => {
                     </li>
                 ))}
             </ul>
+
             <div className={`${GeistMono.className} navbar-navigation-buttons`}>
-                <Button
-                    className={`navbar-navigation-buttons-themeSwitch items-center space-x-2 bg-transparent hover:bg-transparent border-[1px] ${
-                        props.theme === "light" && "text-foreground"
-                    }`}
-                    onClick={props.handleThemeChange}
-                >
-                    {props.theme === "dark" ? <Moon /> : <Sun />}
-                </Button>
+                {props.mounted && (
+                    <Button
+                        className={`navbar-navigation-buttons-themeSwitch items-center space-x-2 bg-transparent hover:bg-transparent border-[1px] ${
+                            props.theme === "light" && "text-foreground"
+                        }`}
+                        onClick={props.handleThemeChange}
+                    >
+                        {props.theme === "dark" ? <Moon /> : <Sun />}
+                    </Button>
+                )}
                 <Link
                     href="/login"
                     className={

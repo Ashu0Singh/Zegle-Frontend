@@ -2,10 +2,6 @@
 @tailwind components;
 @tailwind utilities;
 
-body * {
-    @apply transition-colors duration-1000;
-}
-
 body {
     @apply h-dvh flex flex-col;
 }

@@ -1,3 +1,27 @@
 .chat {
-    @apply h-full bg-cyan-700 border-2;
+    @apply h-full w-full flex flex-col sm:flex-row items-center;
+}
+
+.chat-video {
+    @apply flex flex-col w-full gap-2 p-2 max-w-[375px] max-h-[full];
+}
+
+.chat-video-window {
+    @apply h-[49%] aspect-square;
+}
+
+.chat-text {
+    @apply h-full w-full p-2 ps-0;
+}
+
+.chat-text-chatbox {
+    @apply h-full w-full;
+}
+
+.chat-text-chatbox-header {
+    @apply w-full border-b-[1px] p-4 flex flex-row justify-between items-center;
+}
+
+.lucide-ellipsis-vertical{
+    margin-top: 0px !important;
 }

@@ -5,8 +5,7 @@ import { meta } from "../data";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/Navbar";
 import { GeistSans } from "geist/font/sans";
-import { GeistMono } from "geist/font/mono";
-import { useState } from "react";
+import ContextProvider from "@/context/Context";
 
 export const metadata: Metadata = {
     title: meta.title,
@@ -21,14 +20,16 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
             <body className={`${GeistSans.className} antialiased`}>
-                <ThemeProvider
-                    attribute="class"
-                    enableSystem
-                    disableTransitionOnChange
-                >
-                    <Navbar />
-                    <main className="h-full">{children}</main>
-                </ThemeProvider>
+                <ContextProvider>
+                    <ThemeProvider
+                        attribute="class"
+                        enableSystem
+                        disableTransitionOnChange
+                    >
+                        <Navbar />
+                        <main className="h-full">{children}</main>
+                    </ThemeProvider>
+                </ContextProvider>
             </body>
         </html>
     );

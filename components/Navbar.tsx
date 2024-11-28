@@ -95,9 +95,7 @@ const NavbarNavigation: React.FC<NavbarNavigationProps> = (props) => {
                 ))}
             </ul>
 
-            <div
-                className={`${GeistMono.className} navbar-navigation-buttons`}
-            >
+            <div className={`${GeistMono.className} navbar-navigation-buttons`}>
                 {props.mounted && (
                     <Button
                         className={`navbar-navigation-buttons-themeSwitch items-center space-x-2 bg-transparent hover:bg-transparent border-[1px] ${

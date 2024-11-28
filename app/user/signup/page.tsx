@@ -142,7 +142,15 @@ const Signup = () => {
                         </Button>
                     </form>
                 </Form>
-                <p className="signup-toLogin">Alredy have an account? <Link className={`font-bold text-primary`} href={"/user/login"}>Login</Link></p>
+                <p className="signup-toLogin">
+                    Alredy have an account?{" "}
+                    <Link
+                        className={`font-bold text-primary`}
+                        href={"/user/login"}
+                    >
+                        Login
+                    </Link>
+                </p>
             </UserForm>
         </section>
     );

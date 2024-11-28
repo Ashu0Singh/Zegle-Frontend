@@ -90,11 +90,11 @@ body {
 }
 
 .navbar {
-    @apply p-4 gap-10 border-b-gray-500 border-b-2 border-opacity-15;
+    @apply p-4 h-[64px] gap-10 border-b-gray-500 border-b-2 border-opacity-15;
 }
 
 .navbar-navigation {
-    @apply w-full  flex-col sm:flex-row justify-between;
+    @apply w-full flex-col sm:flex-row justify-between;
 }
 
 .navbar-navigation-routes {

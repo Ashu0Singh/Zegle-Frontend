@@ -12,6 +12,7 @@ import {
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface NavbarNavigationProps {
     theme: string | undefined;
@@ -24,18 +25,9 @@ interface NavbarNavigationProps {
 export function Navbar() {
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false); // For client-side rendering
-    const [isMobile, setIsMobile] = useState(false);
-
+    const isMobile = useIsMobile();
     useEffect(() => {
         setMounted(true);
-        if (typeof window !== "undefined") {
-            const handleResize = () => setIsMobile(window.innerWidth <= 640);
-
-            handleResize();
-            window.addEventListener("resize", handleResize);
-
-            return () => window.removeEventListener("resize", handleResize);
-        }
     }, []);
 
     const handleThemeChange = (
@@ -64,34 +56,37 @@ export function Navbar() {
                     </h1>
                 </Link>
             </div>
-            {isMobile ? (
-                <Dialog>
-                    <DialogTrigger asChild className="cursor-pointer">
-                        <Menu />
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px] border-[1px]">
-                        <DialogTitle className="text-center">Menu</DialogTitle>
-                        <NavbarNavigation
-                            theme={theme}
-                            handleThemeChange={handleThemeChange}
-                            mounted={mounted}
-                        />
-                    </DialogContent>
-                </Dialog>
-            ) : (
-                <NavbarNavigation
-                    theme={theme}
-                    handleThemeChange={handleThemeChange}
-                    mounted={mounted}
-                />
-            )}
+            {typeof isMobile !== "undefined" &&
+                (isMobile ? (
+                    <Dialog>
+                        <DialogTrigger asChild className="cursor-pointer">
+                            <Menu />
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[425px] border-[1px]">
+                            <DialogTitle className="text-center">
+                                Menu
+                            </DialogTitle>
+                            <NavbarNavigation
+                                theme={theme}
+                                handleThemeChange={handleThemeChange}
+                                mounted={mounted}
+                            />
+                        </DialogContent>
+                    </Dialog>
+                ) : (
+                    <NavbarNavigation
+                        theme={theme}
+                        handleThemeChange={handleThemeChange}
+                        mounted={mounted}
+                    />
+                ))}
         </nav>
     );
 }
 
 const NavbarNavigation: React.FC<NavbarNavigationProps> = (props) => {
     return (
-        <div className="navbar-navigation">
+        <div className="navbar-navigation ">
             <ul className="navbar-navigation-routes">
                 {NavbarRoutes.routes.map((route, index) => (
                     <li key={index} className="navbar-navigation-routes-link">
@@ -100,7 +95,9 @@ const NavbarNavigation: React.FC<NavbarNavigationProps> = (props) => {
                 ))}
             </ul>
 
-            <div className={`${GeistMono.className} navbar-navigation-buttons`}>
+            <div
+                className={`${GeistMono.className} navbar-navigation-buttons`}
+            >
                 {props.mounted && (
                     <Button
                         className={`navbar-navigation-buttons-themeSwitch items-center space-x-2 bg-transparent hover:bg-transparent border-[1px] ${

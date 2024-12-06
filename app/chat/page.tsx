@@ -1,11 +1,13 @@
 import React from "react";
 import "./chat.css";
+import VideoChat from "@/components/VideoChat";
+import TextChat from "@/components/TextChat";
 
-import { Card } from "@/components/ui/card";
 const Chat = () => {
     return (
         <main className="chat">
-            <div className="fill-black"></div>
+            <VideoChat />
+            <TextChat />
         </main>
     );
 };

@@ -9,35 +9,25 @@ import { Menu, Moon, Sun } from "lucide-react";
 import {
     Dialog,
     DialogContent,
-    DialogDescription,
-    DialogFooter,
-    DialogHeader,
     DialogTitle,
     DialogTrigger,
 } from "@/components/ui/dialog";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 interface NavbarNavigationProps {
     theme: string | undefined;
     handleThemeChange: (
         event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     ) => void;
+    mounted: boolean | undefined;
 }
 
 export function Navbar() {
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false); // For client-side rendering
-    const [isMobile, setIsMobile] = useState(false);
-
+    const isMobile = useIsMobile();
     useEffect(() => {
         setMounted(true);
-        if (typeof window !== "undefined") {
-            const handleResize = () => setIsMobile(window.innerWidth <= 640);
-
-            handleResize();
-            window.addEventListener("resize", handleResize);
-
-            return () => window.removeEventListener("resize", handleResize);
-        }
     }, []);
 
     const handleThemeChange = (
@@ -55,7 +45,7 @@ export function Navbar() {
         }, 1000);
     };
 
-    if (!mounted) return null;
+    // if (!mounted) return null;
 
     return (
         <nav className="navbar">
@@ -66,32 +56,37 @@ export function Navbar() {
                     </h1>
                 </Link>
             </div>
-            {isMobile ? (
-                <Dialog>
-                    <DialogTrigger asChild className="cursor-pointer">
-                        <Menu />
-                    </DialogTrigger>
-                    <DialogContent className="sm:max-w-[425px] border-[1px]">
-                        <DialogTitle className="text-center">Menu</DialogTitle>
-                        <NavbarNavigation
-                            theme={theme}
-                            handleThemeChange={handleThemeChange}
-                        />
-                    </DialogContent>
-                </Dialog>
-            ) : (
-                <NavbarNavigation
-                    theme={theme}
-                    handleThemeChange={handleThemeChange}
-                />
-            )}
+            {typeof isMobile !== "undefined" &&
+                (isMobile ? (
+                    <Dialog>
+                        <DialogTrigger asChild className="cursor-pointer">
+                            <Menu />
+                        </DialogTrigger>
+                        <DialogContent className="sm:max-w-[425px] border-[1px]">
+                            <DialogTitle className="text-center">
+                                Menu
+                            </DialogTitle>
+                            <NavbarNavigation
+                                theme={theme}
+                                handleThemeChange={handleThemeChange}
+                                mounted={mounted}
+                            />
+                        </DialogContent>
+                    </Dialog>
+                ) : (
+                    <NavbarNavigation
+                        theme={theme}
+                        handleThemeChange={handleThemeChange}
+                        mounted={mounted}
+                    />
+                ))}
         </nav>
     );
 }
 
 const NavbarNavigation: React.FC<NavbarNavigationProps> = (props) => {
     return (
-        <div className="navbar-navigation">
+        <div className="navbar-navigation ">
             <ul className="navbar-navigation-routes">
                 {NavbarRoutes.routes.map((route, index) => (
                     <li key={index} className="navbar-navigation-routes-link">
@@ -99,17 +94,20 @@ const NavbarNavigation: React.FC<NavbarNavigationProps> = (props) => {
                     </li>
                 ))}
             </ul>
+
             <div className={`${GeistMono.className} navbar-navigation-buttons`}>
-                <Button
-                    className={`navbar-navigation-buttons-themeSwitch items-center space-x-2 bg-transparent hover:bg-transparent border-[1px] ${
-                        props.theme === "light" && "text-foreground"
-                    }`}
-                    onClick={props.handleThemeChange}
-                >
-                    {props.theme === "dark" ? <Moon /> : <Sun />}
-                </Button>
+                {props.mounted && (
+                    <Button
+                        className={`navbar-navigation-buttons-themeSwitch items-center space-x-2 bg-transparent hover:bg-transparent border-[1px] ${
+                            props.theme === "light" && "text-foreground"
+                        }`}
+                        onClick={props.handleThemeChange}
+                    >
+                        {props.theme === "dark" ? <Moon /> : <Sun />}
+                    </Button>
+                )}
                 <Link
-                    href="/login"
+                    href="/user/login"
                     className={
                         buttonVariants({ variant: "default" }) +
                         " navbar-navigation-buttons-login"
@@ -118,7 +116,7 @@ const NavbarNavigation: React.FC<NavbarNavigationProps> = (props) => {
                     Login
                 </Link>
                 <Link
-                    href="/signup"
+                    href="/user/signup"
                     className={
                         buttonVariants({ variant: "default" }) +
                         " navbar-navigation-buttons-signup"

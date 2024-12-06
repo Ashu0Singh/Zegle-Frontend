@@ -1,0 +1,54 @@
+.signup,
+.login,
+.user {
+    @apply p-2 h-full content-center;
+}
+
+.form,
+.user-display {
+    @apply max-w-[350px] mx-auto;
+}
+
+.form-header {
+    @apply px-4 py-3 border-b-[1px] border-opacity-50;
+}
+
+.form-header-title {
+    @apply text-xl font-bold tracking-wider;
+}
+
+.form-content,
+.user-display-content {
+    @apply p-6;
+}
+
+.signup-form,
+.login-form,
+.user-display-form {
+    @apply flex flex-col gap-2;
+}
+
+.signup-form-name {
+    @apply flex gap-1;
+}
+.user-display-form-name,
+.user-display-form-last {
+    @apply grid grid-flow-col gap-1;
+}
+
+.signup-toLogin,
+.login-toSignup {
+    @apply text-sm mt-2 w-full text-center;
+}
+
+.user-display-form-label {
+    @apply text-xs opacity-45;
+}
+
+.user-display-form-skeleton {
+    @apply h-8 rounded-md px-3 text-xs;
+}
+
+.user-display-form-text {
+    @apply h-9 rounded-md text-sm font-semibold px-3 items-center align-middle content-center;
+}

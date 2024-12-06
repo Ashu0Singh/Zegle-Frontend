@@ -49,10 +49,10 @@ const Signup = () => {
 
     const router = useRouter();
     const { toast } = useToast();
-    const { setEmail, setUserName, userData } = useUserContext();
+    const { setEmail, setUserName } = useUserContext();
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        const response = await axios
+        await axios
             .put("/user/signup", {
                 ...values,
             })

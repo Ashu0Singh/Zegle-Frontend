@@ -3,19 +3,13 @@ import React, { ReactNode } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "./ui/card";
 import { GeistMono } from "geist/font/mono";
 
-interface LoginData {
-    userName: String;
-    email: String;
-    password: String;
-}
-
 const UserForm = ({
     children,
     FormTitle,
     className,
 }: {
     children: ReactNode;
-    FormTitle: String;
+    FormTitle: string;
     className?: string;
 }) => {
     return (

@@ -170,7 +170,9 @@ const User = () => {
                             <Button
                                 type="submit"
                                 className={`${GeistMono.className} sm:w-full`}
-                                onClick={() => { onSubmit(form.getValues())}}
+                                onClick={() => {
+                                    onSubmit(form.getValues());
+                                }}
                             >
                                 {isEditing ? "Save Profile" : "Edit Profile"}
                             </Button>

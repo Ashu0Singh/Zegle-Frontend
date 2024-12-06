@@ -1,10 +1,10 @@
 "use client";
-import React, { useState } from "react";
+import React from "react";
 import UserForm from "@/components/Form";
 import Link from "next/link";
 import axios from "@/utils/axios.js";
 import "../user.css";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import {
     Form,
@@ -18,13 +18,15 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { GeistMono } from "geist/font/mono";
 import { useToast } from "@/hooks/use-toast";
+import { useUserContext } from "@/hooks/use-user";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     username: z
         .string()
         .trim()
         .min(4, { message: "Username should be more than 4 characters" })
-        .max(10, { message: "Username should be no more than 10 characters" }),
+        .max(12, { message: "Username should be no more than 12 characters" }),
     password: z
         .string({ required_error: "Password is required" })
         .trim()
@@ -33,6 +35,8 @@ const formSchema = z.object({
 
 const Login = () => {
     const { toast } = useToast();
+    const { setEmail, setUserName, userData } = useUserContext();
+    const router = useRouter();
 
     const form = useForm<z.infer<typeof formSchema>>({
         resolver: zodResolver(formSchema),
@@ -47,15 +51,19 @@ const Login = () => {
             .post("/user/login", {
                 ...values,
             })
-            .then((response) => response.headers)
+            .then((response) => {
+                response?.data?.username &&
+                    setUserName(response?.data?.username);
+                response?.data?.email && setEmail(response?.data?.email);
+                router.push("/user");
+            })
             .catch((error) => {
+                console.log(error);
                 toast({
                     title: error?.response?.data?.error,
                 });
                 return error.response;
             });
-
-        console.log(response);
     }
 
     return (

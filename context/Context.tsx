@@ -15,8 +15,12 @@ interface SocketContextType {
 }
 
 interface UserContextType {
-    userData: UserData | null;
-    setUserData: React.Dispatch<React.SetStateAction<UserData | null>>;
+    userData: UserData;
+    setUserData: React.Dispatch<React.SetStateAction<UserData>>;
+    setUserName: (username: string) => void;
+    setEmail: (email: string) => void;
+    setFirstName: (firstname: string) => void;
+    setLastName: (lastname: string) => void;
 }
 
 interface UserData {
@@ -25,10 +29,13 @@ interface UserData {
     firstname: String | undefined;
     lastname: String | undefined;
     avatar: String | undefined;
+    age: Number | null;
+    tier: String | undefined;
 }
 
 export const SocketContext = createContext<SocketContextType | null>(null);
 export const UserContext = createContext<UserContextType | null>(null);
+
 export const useSocket = () => {
     const context = useContext(SocketContext);
     if (!context) {
@@ -71,17 +78,42 @@ export function SocketProvider({ children }: { children: ReactNode }) {
 }
 
 export function UserProvider({ children }: { children: ReactNode }) {
-    const [userData, setUserData] = useState<UserData | null>({
+    const [userData, setUserData] = useState<UserData>({
         username: "",
         email: "",
         firstname: "",
         lastname: "",
         avatar: "",
+        age: null,
+        tier: "",
     });
+
+    const setUserName = (username: String) => {
+        if (username) setUserData((prev) => ({ ...prev, username }));
+    };
+    const setEmail = (email: String) => {
+        if (email) setUserData((prev) => ({ ...prev, email }));
+    };
+    const setFirstName = (firstname: String) => {
+        if (firstname) setUserData((prev) => ({ ...prev, firstname }));
+    };
+    const setLastName = (lastname: String) => {
+        if (lastname) setUserData((prev) => ({ ...prev, lastname }));
+    };
+
     console.log("Fetching user context");
 
     return (
-        <UserContext.Provider value={{ userData, setUserData }}>
+        <UserContext.Provider
+            value={{
+                userData,
+                setUserData,
+                setUserName,
+                setEmail,
+                setFirstName,
+                setLastName,
+            }}
+        >
             {children}
         </UserContext.Provider>
     );

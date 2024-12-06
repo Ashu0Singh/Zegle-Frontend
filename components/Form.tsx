@@ -12,12 +12,14 @@ interface LoginData {
 const UserForm = ({
     children,
     FormTitle,
+    className,
 }: {
     children: ReactNode;
     FormTitle: String;
+    className?: string;
 }) => {
     return (
-        <Card className="form">
+        <Card className={`form ${className}`}>
             <CardHeader className="form-header">
                 <CardTitle
                     className={`${GeistMono.className} form-header-title`}

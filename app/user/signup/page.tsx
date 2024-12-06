@@ -1,8 +1,7 @@
 "use client";
-import React, { useState } from "react";
 import UserForm from "@/components/Form";
 import "../user.css";
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useForm } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import {
     Form,
@@ -16,6 +15,10 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Button } from "@/components/ui/button";
 import { GeistMono } from "geist/font/mono";
 import Link from "next/link";
+import axios from "@/utils/axios";
+import { useUserContext } from "@/hooks/use-user";
+import { useToast } from "@/hooks/use-toast";
+import { useRouter } from "next/navigation";
 
 const formSchema = z.object({
     firstname: z.string().trim().min(1, { message: "Firstname is required" }),
@@ -24,7 +27,7 @@ const formSchema = z.object({
         .string()
         .trim()
         .min(4, { message: "Username should be more than 4 characters" })
-        .max(10, { message: "Username should be no more than 10 characters" }),
+        .max(12, { message: "Username should be no more than 12 characters" }),
     email: z.string().trim().email({ message: "Enter a valid email" }),
     password: z
         .string({ required_error: "Password is required" })
@@ -44,10 +47,27 @@ const Signup = () => {
         },
     });
 
-    function onSubmit(values: z.infer<typeof formSchema>) {
-        // Do something with the form values.
-        // ✅ This will be type-safe and validated.
-        console.log(values);
+    const router = useRouter();
+    const { toast } = useToast();
+    const { setEmail, setUserName, userData } = useUserContext();
+
+    async function onSubmit(values: z.infer<typeof formSchema>) {
+        const response = await axios
+            .put("/user/signup", {
+                ...values,
+            })
+            .then((response) => {
+                response?.data?.username &&
+                    setUserName(response?.data?.username);
+                response?.data?.email && setEmail(response?.data?.email);
+                router.push("/user");
+            })
+            .catch((error) => {
+                toast({
+                    title: error?.response?.data?.error,
+                });
+                return error.response;
+            });
     }
 
     return (

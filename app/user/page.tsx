@@ -2,12 +2,10 @@
 import "./user.css";
 
 import React, { useEffect, useState } from "react";
-import { Card, CardContent } from "@/components/ui/card";
-import { useUserContext } from "@/hooks/use-user";
 import axios from "@/utils/axios";
 import { toast } from "@/hooks/use-toast";
 import { Label } from "@/components/ui/label";
-import { set, useForm, UseFormReturn } from "react-hook-form";
+import { useForm, UseFormReturn } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import {
     Form,
@@ -49,7 +47,7 @@ const formSchema = z.object({
     tier: z.string(),
 });
 
-function preprocessStringToNumber(val: any) {
+function preprocessStringToNumber(val: string) {
     if (!val) {
         return undefined;
     }
@@ -73,7 +71,7 @@ const User = () => {
     const { reset } = form;
     async function onSubmit(values: z.infer<typeof formSchema>) {
         if (isEditing) {
-            const response = await axios
+            await axios
                 .put("/user", {
                     ...values,
                 })
@@ -96,7 +94,7 @@ const User = () => {
     }, []);
 
     const getUserData = async () => {
-        const user = await axios
+        await axios
             .get("/user")
             .then((response) => {
                 setIsLoading(false);

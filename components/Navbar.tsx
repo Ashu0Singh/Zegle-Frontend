@@ -30,9 +30,7 @@ export function Navbar() {
         setMounted(true);
     }, []);
 
-    const handleThemeChange = (
-        event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
-    ) => {
+    const handleThemeChange = () => {
         const body = document.body;
         body.classList.add("theme-transition");
 

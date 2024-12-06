@@ -35,7 +35,7 @@ const formSchema = z.object({
 
 const Login = () => {
     const { toast } = useToast();
-    const { setEmail, setUserName, userData } = useUserContext();
+    const { setEmail, setUserName } = useUserContext();
     const router = useRouter();
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -47,7 +47,7 @@ const Login = () => {
     });
 
     async function onSubmit(values: z.infer<typeof formSchema>) {
-        const response = await axios
+        await axios
             .post("/user/login", {
                 ...values,
             })
@@ -115,7 +115,7 @@ const Login = () => {
                     </form>
                 </Form>
                 <p className="login-toSignup">
-                    Don't have an account?{" "}
+                    {`Don't have an account? `}
                     <Link
                         className={`font-bold text-primary`}
                         href={"/user/signup"}

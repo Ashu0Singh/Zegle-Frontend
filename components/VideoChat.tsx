@@ -1,5 +1,5 @@
 "use client";
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Card, CardFooter } from "./ui/card";
 import Webcam from "react-webcam";
 import { Button } from "./ui/button";

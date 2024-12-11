@@ -91,7 +91,7 @@ const User = () => {
 
     useEffect(() => {
         getUserData();
-    }, []);
+    });
 
     const getUserData = async () => {
         await axios

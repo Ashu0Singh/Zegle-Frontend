@@ -11,7 +11,7 @@ import { io, Socket } from "socket.io-client";
 import { NEXT_PUBLIC_SERVER_URL } from "@/config.js";
 
 interface SocketContextType {
-    socket: Socket | null;
+    getSocketConnection: () => Socket;
 }
 
 interface UserContextType {
@@ -36,42 +36,32 @@ interface UserData {
 export const SocketContext = createContext<SocketContextType | null>(null);
 export const UserContext = createContext<UserContextType | null>(null);
 
-export const useSocket = () => {
-    const context = useContext(SocketContext);
-    if (!context) {
-        throw new Error("useSocket must be used within a UserContextProvider");
-    }
-    return context.socket;
-};
-
 export function SocketProvider({ children }: { children: ReactNode }) {
     const [socket, setSocket] = useState<Socket | null>(null);
     console.log("Fetching socket context");
 
-    // useEffect(() => {
-    //     const connection = io("http://localhost:8080");
+    const getSocketConnection = () => {
+        if (socket && socket?.connected) return socket;
+        const connection = io(NEXT_PUBLIC_SERVER_URL);
 
-    //     connection.on("connect", () => {
-    //         console.log("Connected to socket:", connection.id);
-    //     });
+        connection.on("connect", () => {
+            console.log("Connected to socket:", connection.id);
+        });
 
-    //     connection.on("disconnect", () => {
-    //         console.log("Disconnected from socket");
-    //     });
+        connection.on("disconnect", () => {
+            console.log("Disconnected from socket");
+        });
 
-    //     connection.on("connect_error", (err) => {
-    //         console.error(`Connection error: ${err.message}`);
-    //     });
+        connection.on("connect_error", (err) => {
+            console.error(`Connection error: ${err.message}`);
+        });
 
-    //     setSocket(connection);
-
-    //     return () => {
-    //         connection.disconnect();
-    //     };
-    // }, []);
+        setSocket(connection);
+        return connection;
+    };
 
     return (
-        <SocketContext.Provider value={{ socket }}>
+        <SocketContext.Provider value={{ getSocketConnection }}>
             {children}
         </SocketContext.Provider>
     );

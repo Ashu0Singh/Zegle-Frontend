@@ -1,4 +1,3 @@
-import React from "react";
 import "./chat.css";
 import VideoChat from "@/components/VideoChat";
 import TextChat from "@/components/TextChat";

@@ -10,8 +10,12 @@
     @apply aspect-[4/3] relative overflow-clip;
 }
 
-.chat-video-window-incoming {
-    @apply absolute p-0 bottom-0 w-full h-[20%] bg-gradient-to-t from-neutral-900 to-transparent bg-opacity-50 flex justify-center gap-2 content-center;
+.chat-video-window-buttons {
+    @apply absolute p-2 bottom-2 left-0 right-0 mx-auto w-[80%] h-[20%] flex justify-center gap-2 content-center;
+}
+
+.chat-video-window-rotate {
+    @apply absolute top-2 right-2 w-fit;
 }
 
 .chat-text {

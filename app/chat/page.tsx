@@ -6,8 +6,14 @@ import { useContext } from "react";
 import { SocketContext, UserContext } from "@/context/Context";
 
 const Chat = () => {
-    const { socket, sendMessage, findPartner, partnerName, messages } =
-        useContext(SocketContext);
+    const {
+        socket,
+        sendMessage,
+        findPartner,
+        partnerName,
+        messages,
+        messagesEndRef,
+    } = useContext(SocketContext);
     const { userData } = useContext(UserContext);
 
     return (
@@ -18,6 +24,9 @@ const Chat = () => {
                 userData={userData}
             />
             <TextChat
+                messagesEndRef={messagesEndRef}
+                findPartner={findPartner}
+                userData={userData}
                 username={userData.username ? userData.username : userData.uuid}
                 socket={socket}
                 sendMessage={sendMessage}

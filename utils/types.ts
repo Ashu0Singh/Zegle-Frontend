@@ -4,6 +4,7 @@ export interface SocketContextType {
     socket: Socket | null;
     partnerName: String | null;
     messages: Array<any>;
+    messagesEndRef: React.RefObject<HTMLDivElement>;
     disconnectChat: (userdata: UserData) => void;
     findPartner: (userdata: UserData) => void;
     sendMessage: (message: string) => void;
@@ -30,7 +31,10 @@ export interface UserData {
 }
 
 export interface TextChatProps {
-    username: String | undefined;
+    messagesEndRef: React.RefObject<HTMLDivElement>;
+    userData: UserData;
+    findPartner: (userdata: UserData) => void;
+    username: String;
     socket: Socket | null;
     partnerName: String | null;
     messages: Array<any>;

@@ -1,5 +1,5 @@
 "use client";
-import { useState, KeyboardEvent } from "react";
+import { useState, KeyboardEvent, useRef, useEffect } from "react";
 import {
     Card,
     CardContent,
@@ -13,28 +13,40 @@ import { Button } from "./ui/button";
 import { TextChatProps } from "@/utils/types";
 
 const TextChat = ({
+    findPartner,
+    userData,
     partnerName,
     sendMessage,
     messages,
     username,
+    messagesEndRef,
 }: TextChatProps) => {
     const [message, setMessage] = useState("");
 
-    const messageList = messages.map((messageObject) => {
+    const messageList = messages?.map((messageObject, index) => {
         return (
             <div
+                ref={index === messages.length - 1 ? messagesEndRef : null}
                 key={messageObject.timestamp}
-                className={`${messageObject.username == username ? "ml-auto" : "mr-auto"} text-primary w-fit p-2 bg-gray-200 rounded-lg`}
+                className={`${messageObject.username == username ? "ml-auto bg-gray-200 text-slate-800" : "mr-auto text-gray-200 bg-slate-900"} w-fit py-1 px-4 max-w-[80%] text-wrap rounded-lg`}
             >
                 {messageObject.message}
             </div>
         );
     });
 
+    useEffect(() => {
+        if (messageList.length > 0)
+            messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+    }, [messageList]);
+
     const handleSendMessage = () => {
-        if (message.trim()) {
+        if (partnerName === null) {
+            findPartner(userData);
+        } else if (message.trim()) {
             sendMessage(message);
             setMessage("");
+            messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
         }
     };
 
@@ -55,9 +67,10 @@ const TextChat = ({
                     <EllipsisVerticalIcon />
                 </CardHeader>
                 <CardContent className="chat-text-chatbox-chatbox pb-0">
-                    <div className="flex flex-col gap-2 h-full pt-2 pb-2">
+                    <div className="flex flex-col gap-2 h-fit pt-2 mb-2">
                         {messageList}
                     </div>
+                    <div ref={messagesEndRef} />
                 </CardContent>
                 <CardFooter className="chat-text-chatbox-footer">
                     <Input
@@ -66,6 +79,7 @@ const TextChat = ({
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}
                         onKeyDown={handleKeyDown}
+                        placeholder="Type a message"
                     />
                     <Button
                         className="w-[50px] sm:w-[60px] sm:px-6"

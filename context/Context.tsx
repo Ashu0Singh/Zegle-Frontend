@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, ReactNode, useState, useEffect } from "react";
+import { createContext, ReactNode, useState, useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
 import { NEXT_PUBLIC_SERVER_URL } from "@/config.js";
 import { generateUUID } from "@/utils/generateUUID.js";
@@ -15,79 +15,9 @@ export function SocketProvider({ children }: { children: ReactNode }) {
     const [partnerName, setPartnerName] = useState(null);
     const [isSearching, setIsSearching] = useState(false);
     const [isConnected, setIsConnected] = useState(false);
-    const [messages, setMessages] = useState([
-        {
-            username: "ashu.simgh",
-            message: "Supp bro whatcha upto? ",
-            timestamp: "2024-12-15T05:46:34.624Z",
-        },
-        {
-            username: "2977770100",
-            message: "All good man? How's your wife? ",
-            timestamp: "2024-12-15T05:46:47.807Z",
-        },
-        {
-            username: "ashu.simgh",
-            message: "Pretty good pretty good!",
-            timestamp: "2024-12-15T05:41:03.743Z",
-        },
-        {
-            username: "ashu.simgh",
-            message: "Supp bro whatcha upto? ",
-            timestamp: "2024-12-15T15:46:34.624Z",
-        },
-        {
-            username: "2977770100",
-            message: "All good man? How's your wife? ",
-            timestamp: "2024-12-15T05:46:44.807Z",
-        },
-        {
-            username: "ashu.simgh",
-            message: "Pretty good pretty good!",
-            timestamp: "2024-12-15T05:47:03.723Z",
-        },
-        {
-            username: "ashu.simgh",
-            message: "Supp bro whatcha upto? ",
-            timestamp: "2024-12-15T05:46:24.624Z",
-        },
-        {
-            username: "2977770100",
-            message: "All good man? How's your wife? ",
-            timestamp: "2024-12-15T05:46:37.817Z",
-        },
-        {
-            username: "ashu.simgh",
-            message: "Pretty good pretty good!",
-            timestamp: "2024-12-15T05:47:03.523Z",
-        },
-        {
-            username: "ashu.simgh",
-            message: "Supp bro whatcha upto? ",
-            timestamp: "2024-12-15T05:46:34.524Z",
-        },
-        {
-            username: "2977770100",
-            message: "All good man? How's your wife? ",
-            timestamp: "2024-12-15T05:46:47.307Z",
-        },
-        {
-            username: "ashu.simgh",
-            message: "Pretty good pretty good!",
-            timestamp: "2024-11-15T05:47:03.743Z",
-        },
-        {
-            username: "ashu.simgh",
-            message: "Pretty good pretty good!",
-            timestamp: "2024-12-15T01:57:03.743Z",
-        },
-        {
-            username: "ashu.simgh",
-            message: "Pretty good pretty good!",
-            timestamp: "2024-12-15T15:41:03.743Z",
-        },
-    ]);
+    const [messages, setMessages] = useState([]);
     const [roomID, setRoomID] = useState(null);
+    const messagesEndRef = useRef(null);
 
     useEffect(() => {
         const socketConnnetion = io(NEXT_PUBLIC_SERVER_URL);
@@ -160,6 +90,7 @@ export function SocketProvider({ children }: { children: ReactNode }) {
                 partnerName,
                 messages,
                 disconnectChat,
+                messagesEndRef,
             }}
         >
             {children}
@@ -215,8 +146,6 @@ export function UserProvider({ children }: { children: ReactNode }) {
     const setLastName = (lastname: String) => {
         if (lastname) setUserData((prev) => ({ ...prev, lastname }));
     };
-
-    console.log("Fetching user context");
 
     return (
         <UserContext.Provider

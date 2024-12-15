@@ -5,12 +5,10 @@ import Webcam from "react-webcam";
 import { Button } from "./ui/button";
 import { GeistMono } from "geist/font/mono";
 import { SocketContext } from "@/context/Context";
+import { VideoChatProps } from "@/utils/types";
 
-const VideoChat = () => {
+const VideoChat = ({ socket, findPartner, userData }: VideoChatProps) => {
     const webcamRef = React.useRef(null);
-    console.log(webcamRef);
-
-    const { getSocketConnection } = useContext(SocketContext);
 
     return (
         <section className="chat-video">
@@ -27,7 +25,7 @@ const VideoChat = () => {
                     </Button>
                     <Button
                         className="chat-video-window-incoming-button bg-green-600 px-6 opacity-70"
-                        onClick={() => console.log(getSocketConnection())}
+                        onClick={() => findPartner(userData)}
                     >
                         Next
                     </Button>

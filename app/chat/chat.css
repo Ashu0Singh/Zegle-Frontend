@@ -31,7 +31,7 @@
 }
 
 .chat-text-chatbox-chatbox {
-    @apply flex-grow min-h-[50vh] overflow-scroll;
+    @apply flex-grow h-[50vh] overflow-y-scroll content-end;
 }
 
 .chat-text-chatbox-footer {

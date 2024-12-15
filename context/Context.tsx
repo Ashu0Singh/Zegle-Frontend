@@ -153,7 +153,14 @@ export function SocketProvider({ children }: { children: ReactNode }) {
 
     return (
         <SocketContext.Provider
-            value={{ socket, findPartner, sendMessage, partnerName, messages, disconnectChat }}
+            value={{
+                socket,
+                findPartner,
+                sendMessage,
+                partnerName,
+                messages,
+                disconnectChat,
+            }}
         >
             {children}
         </SocketContext.Provider>

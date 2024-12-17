@@ -3,32 +3,40 @@ import "./chat.css";
 import VideoChat from "@/components/VideoChat";
 import TextChat from "@/components/TextChat";
 import { useContext } from "react";
-import { SocketContext, UserContext } from "@/context/Context";
+import { SocketContext } from "@/context/SocketContext";
+import { useUserContext } from "@/hooks/use-user";
 
 const Chat = () => {
     const {
-        socket,
-        sendMessage,
-        findPartner,
         partnerName,
         messages,
+        roomID,
+        isConnected,
+
         messagesEndRef,
+        localVideoRef,
+        remoteVideoRef,
+
+        sendMessage,
+        findPartner,
     } = useContext(SocketContext);
-    const { userData } = useContext(UserContext);
+    const { userData } = useUserContext();
 
     return (
         <main className="chat">
             <VideoChat
+                roomID={roomID}
+                localVideoRef={localVideoRef}
+                remoteVideoRef={remoteVideoRef}
                 findPartner={findPartner}
-                socket={socket}
                 userData={userData}
+                isConnected={isConnected}
             />
             <TextChat
                 messagesEndRef={messagesEndRef}
                 findPartner={findPartner}
                 userData={userData}
                 username={userData.username ? userData.username : userData.uuid}
-                socket={socket}
                 sendMessage={sendMessage}
                 partnerName={partnerName}
                 messages={messages}

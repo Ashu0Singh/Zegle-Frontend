@@ -1,22 +1,36 @@
 "use client";
-import React, { useContext } from "react";
+import React, { useContext, useRef } from "react";
 import { Card, CardFooter } from "./ui/card";
 import Webcam from "react-webcam";
 import { Button } from "./ui/button";
 import { GeistMono } from "geist/font/mono";
-import { SocketContext } from "@/context/Context";
+import { SocketContext } from "@/context/SocketContext";
 import { VideoChatProps } from "@/utils/types";
 
-const VideoChat = ({ socket, findPartner, userData }: VideoChatProps) => {
-    const webcamRef = React.useRef(null);
+const VideoChat = ({
+    userData,
+    localVideoRef,
+    remoteVideoRef,
+    isConnected,
 
+    findPartner,
+}: VideoChatProps) => {
     return (
         <section className="chat-video">
             <Card className="chat-video-window">
-                <Webcam className="h-full mx-auto" />
+                <video
+                    ref={remoteVideoRef}
+                    className="h-full mx-auto"
+                    autoPlay
+                />
             </Card>
             <Card className="chat-video-window">
-                <Webcam className="h-full mx-auto" ref={webcamRef} />
+                <video
+                    className="h-full mx-auto"
+                    autoPlay
+                    muted
+                    ref={localVideoRef}
+                />
                 <CardFooter
                     className={`chat-video-window-buttons ${GeistMono.className}`}
                 >

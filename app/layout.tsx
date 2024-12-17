@@ -5,7 +5,7 @@ import { meta } from "../data";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Navbar } from "@/components/Navbar";
 import { GeistSans } from "geist/font/sans";
-import { UserProvider } from "@/context/Context";
+import { UserProvider } from "@/context/UserContext";
 import { Toaster } from "@/components/ui/toaster";
 
 export const metadata: Metadata = {

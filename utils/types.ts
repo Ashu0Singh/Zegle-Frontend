@@ -1,10 +1,18 @@
 import { Socket } from "socket.io-client";
+import Webcam from "react-webcam";
 
 export interface SocketContextType {
     socket: Socket | null;
     partnerName: String | null;
     messages: Array<any>;
     messagesEndRef: React.RefObject<HTMLDivElement>;
+    roomID: String | null;
+    isConnected: boolean;
+
+    localVideoRef: React.RefObject<HTMLVideoElement>;
+
+    remoteVideoRef: React.RefObject<HTMLVideoElement>;
+
     disconnectChat: (userdata: UserData) => void;
     findPartner: (userdata: UserData) => void;
     sendMessage: (message: string) => void;
@@ -35,7 +43,6 @@ export interface TextChatProps {
     userData: UserData;
     findPartner: (userdata: UserData) => void;
     username: String;
-    socket: Socket | null;
     partnerName: String | null;
     messages: Array<any>;
     sendMessage: (message: string) => void;
@@ -43,6 +50,11 @@ export interface TextChatProps {
 
 export interface VideoChatProps {
     userData: UserData;
-    socket: Socket | null;
+    roomID: String | null;
+    localVideoRef: React.RefObject<HTMLVideoElement>;
+
+    isConnected: boolean;
+
+    remoteVideoRef: React.RefObject<HTMLVideoElement>;
     findPartner: (userdata: UserData) => void;
 }

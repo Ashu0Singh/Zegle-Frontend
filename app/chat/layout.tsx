@@ -1,5 +1,5 @@
 import "./chat.css";
-import { SocketProvider } from "@/context/Context";
+import { SocketProvider } from "@/context/SocketContext";
 
 export default function RootLayout({
     children,

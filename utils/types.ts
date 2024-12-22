@@ -13,8 +13,23 @@ export interface SocketContextType {
 
     remoteVideoRef: React.RefObject<HTMLVideoElement>;
 
-    disconnectChat: (userdata: UserData) => void;
-    findPartner: (userdata: UserData) => void;
+    findPartner: (userData: UserData, socketConnection: Socket) => void;
+    disconnectChat: (
+        userData: UserData,
+        socketConnection: Socket,
+        {
+            setIsConnected,
+            setRoomID,
+            setPartnerName,
+        }: {
+            setIsConnected: (connected: boolean) => void;
+            setRoomID: (id: string | null) => void;
+            setPartnerName: (name: string | null) => void;
+        },
+        remoteVideoRef: React.RefObject<HTMLVideoElement>,
+        findPartner: (userData: UserData, socketConnection: Socket) => void,
+    ) => void;
+    stopChatting: () => void;
     sendMessage: (message: string) => void;
 }
 
@@ -40,8 +55,9 @@ export interface UserData {
 
 export interface TextChatProps {
     messagesEndRef: React.RefObject<HTMLDivElement>;
+    socket: Socket | null;
     userData: UserData;
-    findPartner: (userdata: UserData) => void;
+    findPartner: (userData: UserData, socketConnection: Socket) => void;
     username: String;
     partnerName: String | null;
     messages: Array<any>;
@@ -52,9 +68,11 @@ export interface VideoChatProps {
     userData: UserData;
     roomID: String | null;
     localVideoRef: React.RefObject<HTMLVideoElement>;
+    socket: Socket | null;
 
     isConnected: boolean;
 
     remoteVideoRef: React.RefObject<HTMLVideoElement>;
-    findPartner: (userdata: UserData) => void;
+    stopChatting: () => void;
+    findPartner: (userData: UserData, socketConnection: Socket) => void;
 }

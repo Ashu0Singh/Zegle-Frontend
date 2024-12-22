@@ -2,164 +2,149 @@
 
 import { createContext, ReactNode, useState, useEffect, useRef } from "react";
 import { io, Socket } from "socket.io-client";
-import { NEXT_PUBLIC_SERVER_URL } from "@/config.js";
 import { UserData, SocketContextType } from "@/utils/types";
 import {
     addAnswer,
-    getPeerConnection,
+    closePeerConnection,
     getPeerConnectionAnswer,
-    getPeerConnectionOffer,
 } from "@/utils/peer";
+import { useUserContext } from "@/hooks/use-user";
+import {
+    setupMediaStream,
+    handleIceCandidates,
+    handlePartnerFound,
+    disconnectChat,
+} from "@/utils/socket-utils";
+import { NEXT_PUBLIC_SERVER_URL } from "@/config.js";
+import { toast } from "@/hooks/use-toast";
 
 export const SocketContext = createContext<SocketContextType | null>(null);
 
 export function SocketProvider({ children }: { children: ReactNode }) {
-    const [socket, setSocket] = useState<Socket | null>(null);
-
-    const [peerConnection, setPeerConnection] = useState(null);
-
-    const [partnerName, setPartnerName] = useState(null);
+    const [socket, setSocket] = useState<Socket>();
+    const [partnerName, setPartnerName] = useState<string | null>(null);
     const [isSearching, setIsSearching] = useState(false);
     const [isConnected, setIsConnected] = useState(false);
     const [messages, setMessages] = useState([]);
-    const [roomID, setRoomID] = useState(null);
+    const [roomID, setRoomID] = useState<string | null>(null);
 
     const messagesEndRef = useRef(null);
     const localVideoRef = useRef<HTMLVideoElement>(null);
     const remoteVideoRef = useRef<HTMLVideoElement>(null);
+    const { userData } = useUserContext();
 
-    // Getting and Setting up user media streams
-    const getUserMedia = async () => {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({
-                video: true,
-                audio: true,
+    const connectToSocket = async () => {
+        await setupMediaStream(localVideoRef);
+        if (!localVideoRef.current.srcObject) {
+            toast({
+                title: "Camera and microphone access required",
+                description:
+                    "Please allow camera and microphone access to start chatting",
             });
-
-            if (localVideoRef.current) {
-                localVideoRef.current.srcObject = stream;
-            }
-        } catch (error) {
-            console.error("Media setup error:", error);
+            return null;
         }
-    };
-
-    useEffect(() => {
-        getUserMedia().then(() => {
+        if (!socket) {
             const socketConnection = io(NEXT_PUBLIC_SERVER_URL);
 
-            socketConnection.on("connect", async () => {
-                console.log("Connected to socket:", socketConnection.id);
+            socketConnection.on("connect", () => {
                 setSocket(socketConnection);
+                closePeerConnection(remoteVideoRef);
             });
 
             socketConnection.on("disconnect", () => {
-                console.log("Disconnected from socket");
+                console.log("Socket disconnected");
+                socketConnection.close();
+                console.log(socketConnection);
+                setSocket(null);
+                closePeerConnection(remoteVideoRef);
             });
 
-            socketConnection.on("partner_found", async (data) => {
-                setPartnerName(data.username);
-                setRoomID(data.roomID);
-                setIsSearching(false);
-                setIsConnected(true);
-
-                if (data.isInitiator) {
-                    const { offer, peerConnection } =
-                        await getPeerConnectionOffer(
-                            localVideoRef,
-                            remoteVideoRef,
-                            socketConnection,
-                            data.roomID,
-                        );
-
-                    setPeerConnection(peerConnection);
-
-                    socketConnection.emit("add_offer", {
-                        offer,
-                        roomID: data.roomID,
-                    });
-                }
-            });
+            socketConnection.on("partner_found", (data) =>
+                handlePartnerFound(
+                    data,
+                    localVideoRef,
+                    remoteVideoRef,
+                    socketConnection,
+                    {
+                        setPartnerName,
+                        setRoomID,
+                        setIsSearching,
+                        setIsConnected,
+                    },
+                ),
+            );
 
             socketConnection.on("add_offer", async (data) => {
-                const { answer, peerConnection } =
-                    await getPeerConnectionAnswer(
-                        localVideoRef,
-                        remoteVideoRef,
-                        socketConnection,
-                        data.roomID,
-                        data.offer,
-                    );
-
-                setPeerConnection(peerConnection);
-
+                const { answer } = await getPeerConnectionAnswer(
+                    localVideoRef,
+                    remoteVideoRef,
+                    socketConnection,
+                    data.roomID,
+                    data.offer,
+                );
                 socketConnection.emit("add_answer", {
-                    answer: answer,
+                    answer,
                     roomID: data.roomID,
                 });
             });
 
-            socketConnection.on("add_answer", async (data) => {
-                console.log("Add answer", data);
-                await addAnswer(data.answer);
-            });
+            socketConnection.on(
+                "add_answer",
+                async (data) => await addAnswer(data.answer),
+            );
+            socketConnection.on(
+                "ice_candidates",
+                async (data) =>
+                    await handleIceCandidates(
+                        data.candidates,
+                        localVideoRef,
+                        remoteVideoRef,
+                        socketConnection,
+                        roomID,
+                    ),
+            );
+            socketConnection.on("receive_message", (messageData) =>
+                setMessages((prev) => [...prev, messageData]),
+            );
+            socketConnection.on("partner_disconnected", () =>
+                disconnectChat(
+                    userData,
+                    socketConnection,
+                    {
+                        setIsConnected,
+                        setRoomID,
+                        setPartnerName,
+                    },
+                    remoteVideoRef,
+                    findPartner,
+                ),
+            );
 
-            socketConnection.on("ice_candidates", async (data) => {
-                await handleIceCandidates(data.candidates);
-            });
-
-            socketConnection.on("receive_message", (messageData) => {
-                setMessages((prevMessages) => [...prevMessages, messageData]);
-            });
-
-            socketConnection.on("partner_disconnected", () => {
-                setIsConnected(false);
-                setRoomID(null);
-
-                alert("Your partner has disconnected");
-            });
-        });
-    }, []);
-
-    const handleIceCandidates = async (candidate) => {
-        const peerConnection = await getPeerConnection(
-            localVideoRef,
-            remoteVideoRef,
-            socket,
-            roomID,
-        );
-        if (candidate) {
-            console.log("Adding ICE candidates:", candidate);
-            console.log(peerConnection);
-            try {
-                await peerConnection.addIceCandidate(candidate);
-            } catch (error) {
-                console.error("Error adding ICE candidate:", error);
-            }
+            return socketConnection;
         }
+        return socket;
     };
 
-    const findPartner = (userdata: UserData) => {
+    const findPartner = async (userData: UserData, socket: Socket) => {
         setIsSearching(true);
-        if (socket) {
-            socket.emit("find_partner", userdata);
+        const socketConnection = socket || (await connectToSocket());
+        socketConnection?.emit("find_partner", userData);
+    };
+
+    const stopChatting = () => {
+        if (socket && isConnected && roomID) {
+            socket.disconnect();
+            setIsConnected(false);
+            setRoomID(null);
+            setPartnerName(null);
+            closePeerConnection(remoteVideoRef);
         }
     };
 
     const sendMessage = (message: string) => {
         if (message.trim() && roomID && socket) {
-            socket.emit("send_message", {
-                roomID,
-                message,
-            });
+            socket.emit("send_message", { roomID, message });
         }
-    };
-
-    const disconnectChat = (userdata) => {
-        setIsConnected(false);
-        setRoomID(null);
-
-        findPartner(userdata);
     };
 
     return (
@@ -173,6 +158,7 @@ export function SocketProvider({ children }: { children: ReactNode }) {
                 messagesEndRef,
                 localVideoRef,
                 remoteVideoRef,
+                stopChatting,
                 findPartner,
                 sendMessage,
                 disconnectChat,

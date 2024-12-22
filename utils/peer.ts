@@ -1,3 +1,5 @@
+import { Socket } from "socket.io-client";
+
 const servers = {
     iceServers: [
         {
@@ -6,48 +8,33 @@ const servers = {
                 "stun:stun1.l.google.com:5349",
             ],
         },
-        {
-            urls: "turn:global.relay.metered.ca:80",
-            username: "c0364de538285be0533e9d03",
-            credential: "23OtGgEmVOAMt0R5",
-        },
-        {
-            urls: "turn:global.relay.metered.ca:443",
-            username: "c0364de538285be0533e9d03",
-            credential: "23OtGgEmVOAMt0R5",
-        },
     ],
 };
 
 let peerConnection = null;
 
 export const getPeerConnection = async (
-    localVideoRef,
-    remoteVideoRef,
-    socket,
-    roomID,
+    localVideoRef: React.RefObject<HTMLVideoElement>,
+    remoteVideoRef: React.RefObject<HTMLVideoElement>,
+    socket: Socket,
+    roomID: string | null,
 ) => {
     if (peerConnection === null) {
         peerConnection = new RTCPeerConnection(servers);
-        const stream = localVideoRef.current.srcObject;
+        const stream = localVideoRef?.current?.srcObject as MediaStream;
 
-        stream.getTracks().forEach((track) => {
+        stream?.getTracks().forEach((track: MediaStreamTrack) => {
             peerConnection.addTrack(track, stream);
         });
 
         peerConnection.ontrack = (event) => {
-            console.log("Remote track received:", event.streams[0]);
             if (remoteVideoRef.current) {
-                remoteVideoRef.current.srcObject = event.streams[0]; // Entire stream, not just tracks
+                remoteVideoRef.current.srcObject = event.streams[0];
             }
         };
 
         peerConnection.onicecandidate = (event) => {
             if (event.candidate) {
-                console.log(
-                    "Sending ICE candidates to server:",
-                    event.candidate,
-                );
                 socket.emit("ice_candidates", {
                     candidates: event.candidate,
                     roomID: roomID,
@@ -57,6 +44,14 @@ export const getPeerConnection = async (
     }
 
     return peerConnection;
+};
+
+export const closePeerConnection = (
+    remotecVideoRef: React.RefObject<HTMLVideoElement>,
+) => {
+    peerConnection?.close();
+    remotecVideoRef.current.srcObject = null;
+    peerConnection = null;
 };
 
 export const getPeerConnectionOffer = async (

@@ -2,7 +2,7 @@
 import "./chat.css";
 import VideoChat from "@/components/VideoChat";
 import TextChat from "@/components/TextChat";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { SocketContext } from "@/context/SocketContext";
 import { useUserContext } from "@/hooks/use-user";
 
@@ -12,10 +12,12 @@ const Chat = () => {
         messages,
         roomID,
         isConnected,
-
+        stopChatting,
         messagesEndRef,
         localVideoRef,
         remoteVideoRef,
+
+        socket,
 
         sendMessage,
         findPartner,
@@ -25,15 +27,18 @@ const Chat = () => {
     return (
         <main className="chat">
             <VideoChat
+                socket={socket}
                 roomID={roomID}
                 localVideoRef={localVideoRef}
                 remoteVideoRef={remoteVideoRef}
                 findPartner={findPartner}
                 userData={userData}
+                stopChatting={stopChatting}
                 isConnected={isConnected}
             />
             <TextChat
                 messagesEndRef={messagesEndRef}
+                socket={socket}
                 findPartner={findPartner}
                 userData={userData}
                 username={userData.username ? userData.username : userData.uuid}

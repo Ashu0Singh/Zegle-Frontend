@@ -14,6 +14,7 @@ import { TextChatProps } from "@/utils/types";
 
 const TextChat = ({
     findPartner,
+    socket,
     userData,
     partnerName,
     sendMessage,
@@ -42,7 +43,7 @@ const TextChat = ({
 
     const handleSendMessage = () => {
         if (partnerName === null) {
-            findPartner(userData);
+            findPartner(userData, socket);
         } else if (message.trim()) {
             sendMessage(message);
             setMessage("");

@@ -50,5 +50,5 @@
 }
 
 .user-display-form-text {
-    @apply h-9 rounded-md text-sm font-semibold px-3 items-center align-middle content-center;
+    @apply h-9 rounded-md text-sm px-3 items-center align-middle content-center;
 }

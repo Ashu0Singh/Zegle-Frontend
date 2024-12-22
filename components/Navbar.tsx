@@ -30,7 +30,7 @@ export function Navbar() {
     const isMobile = useIsMobile();
 
     const pathName = usePathname();
-    const { socket} = useContext(SocketContext);
+    const { socket } = useContext(SocketContext);
 
     useEffect(() => {
         if (pathName !== "/chat") {

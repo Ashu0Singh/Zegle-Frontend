@@ -52,9 +52,7 @@ export function SocketProvider({ children }: { children: ReactNode }) {
             });
 
             socketConnection.on("disconnect", () => {
-                console.log("Socket disconnected");
                 socketConnection.close();
-                console.log(socketConnection);
                 setSocket(null);
                 closePeerConnection(remoteVideoRef);
             });
@@ -138,6 +136,8 @@ export function SocketProvider({ children }: { children: ReactNode }) {
             setRoomID(null);
             setPartnerName(null);
             closePeerConnection(remoteVideoRef);
+        } else if (!isConnected) {
+            socket?.disconnect();
         }
     };
 

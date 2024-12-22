@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { NavbarRoutes } from "@/data";
 import { GeistMono } from "geist/font/mono";
 import { Button, buttonVariants } from "@/components/ui/button";
@@ -13,6 +13,8 @@ import {
     DialogTrigger,
 } from "@/components/ui/dialog";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { usePathname } from "next/navigation";
+import { SocketContext } from "@/context/SocketContext";
 
 interface NavbarNavigationProps {
     theme: string | undefined;
@@ -26,9 +28,16 @@ export function Navbar() {
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false); // For client-side rendering
     const isMobile = useIsMobile();
+
+    const pathName = usePathname();
+    const { socket} = useContext(SocketContext);
+
     useEffect(() => {
+        if (pathName !== "/chat") {
+            socket?.disconnect();
+        }
         setMounted(true);
-    }, []);
+    }, [pathName]);
 
     const handleThemeChange = () => {
         const body = document.body;

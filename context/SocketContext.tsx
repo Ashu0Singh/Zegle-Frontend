@@ -55,6 +55,9 @@ export function SocketProvider({ children }: { children: ReactNode }) {
             socketConnection.on("disconnect", () => {
                 socketConnection.close();
                 setSocket(null);
+                setPartnerName(null);   
+                setRoomID(null);
+                setIsConnected(false);
                 closePeerConnection(remoteVideoRef);
             });
 

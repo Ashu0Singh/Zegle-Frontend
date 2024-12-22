@@ -7,6 +7,7 @@ import { Navbar } from "@/components/Navbar";
 import { GeistSans } from "geist/font/sans";
 import { UserProvider } from "@/context/UserContext";
 import { Toaster } from "@/components/ui/toaster";
+import { SocketProvider } from "@/context/SocketContext";
 
 export const metadata: Metadata = {
     title: meta.title,
@@ -22,15 +23,17 @@ export default function RootLayout({
         <html lang="en" suppressHydrationWarning>
             <body className={`${GeistSans.className} antialiased`}>
                 <UserProvider>
-                    <ThemeProvider
-                        attribute="class"
-                        enableSystem
-                        disableTransitionOnChange
-                    >
-                        <Navbar />
-                        <main className="h-full">{children}</main>
-                        <Toaster />
-                    </ThemeProvider>
+                    <SocketProvider>
+                        <ThemeProvider
+                            attribute="class"
+                            enableSystem
+                            disableTransitionOnChange
+                        >
+                            <Navbar />
+                            <main className="h-full">{children}</main>
+                            <Toaster />
+                        </ThemeProvider>
+                    </SocketProvider>
                 </UserProvider>
             </body>
         </html>

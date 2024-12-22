@@ -47,10 +47,10 @@ export const getPeerConnection = async (
 };
 
 export const closePeerConnection = (
-    remotecVideoRef: React.RefObject<HTMLVideoElement>,
+    remoteVideoRef: React.RefObject<HTMLVideoElement>,
 ) => {
     peerConnection?.close();
-    remotecVideoRef.current.srcObject = null;
+    if (remoteVideoRef.current) remoteVideoRef.current.srcObject = null;
     peerConnection = null;
 };
 

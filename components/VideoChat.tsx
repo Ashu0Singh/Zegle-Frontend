@@ -21,7 +21,6 @@ const VideoChat = ({
                 <video
                     ref={remoteVideoRef}
                     className="video h-full mx-auto"
-                    muted
                     autoPlay
                 />
             </Card>

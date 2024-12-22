@@ -34,8 +34,9 @@ export function SocketProvider({ children }: { children: ReactNode }) {
     const { userData } = useUserContext();
 
     const connectToSocket = async () => {
-        await setupMediaStream(localVideoRef);
-        if (!localVideoRef.current.srcObject) {
+        try {
+            await setupMediaStream(localVideoRef);
+        } catch {
             toast({
                 title: "Camera and microphone access required",
                 description:
@@ -126,7 +127,14 @@ export function SocketProvider({ children }: { children: ReactNode }) {
     const findPartner = async (userData: UserData, socket: Socket) => {
         setIsSearching(true);
         const socketConnection = socket || (await connectToSocket());
-        socketConnection?.emit("find_partner", userData);
+        if (isConnected && socketConnection) {
+            socketConnection?.emit("disconnect_partner", { roomID });
+            setIsConnected(false);
+            setRoomID(null);
+            setPartnerName(null);
+            closePeerConnection(remoteVideoRef);
+        }
+        socketConnection && socketConnection?.emit("find_partner", userData);
     };
 
     const stopChatting = () => {

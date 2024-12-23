@@ -14,7 +14,7 @@
 }
 
 .form-header-title {
-    @apply text-xl font-bold tracking-wider;
+    @apply text-xl font-bold tracking-wide;
 }
 
 .form-content,
@@ -26,6 +26,10 @@
 .login-form,
 .user-display-form {
     @apply flex flex-col gap-2;
+}
+
+.user-display-form {
+    @apply gap-[0.1rem];
 }
 
 .signup-form-name {
@@ -50,5 +54,5 @@
 }
 
 .user-display-form-text {
-    @apply h-9 rounded-md text-sm px-3 items-center align-middle content-center;
+    @apply h-9 rounded-md text-sm px-3 items-center align-middle content-center border-[1px] p-1 bg-white;
 }

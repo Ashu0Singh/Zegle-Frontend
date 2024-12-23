@@ -167,7 +167,7 @@ const User = () => {
                             </div>
                             <Button
                                 type="submit"
-                                className={`${GeistMono.className} sm:w-full`}
+                                className={`${GeistMono.className} mt-2 sm:w-full`}
                                 onClick={() => {
                                     onSubmit(form.getValues());
                                 }}
@@ -227,7 +227,7 @@ function FormInputs({
                     )}
                 />
             ) : (
-                <p className="user-display-form-text border-[1px] p-1">
+                <p className="user-display-form-text">
                     {form.getValues(name)}
                 </p>
             )}

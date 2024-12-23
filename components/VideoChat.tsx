@@ -1,7 +1,7 @@
 "use client";
+
 import React from "react";
 import { Card, CardFooter } from "./ui/card";
-import Webcam from "react-webcam";
 import { Button } from "./ui/button";
 import { GeistMono } from "geist/font/mono";
 import { VideoChatProps } from "@/utils/types";

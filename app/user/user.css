@@ -1,6 +1,7 @@
 .signup,
 .login,
-.user {
+.user,
+.verify {
     @apply p-2 h-full content-center;
 }
 
@@ -24,7 +25,8 @@
 
 .signup-form,
 .login-form,
-.user-display-form {
+.user-display-form,
+.verify-form {
     @apply flex flex-col gap-2;
 }
 
@@ -54,5 +56,5 @@
 }
 
 .user-display-form-text {
-    @apply h-9 rounded-md text-sm px-3 items-center align-middle content-center border-[1px] p-1 bg-white;
+    @apply h-9 rounded-md text-sm px-3 items-center align-middle content-center border-[1px];
 }

@@ -227,9 +227,7 @@ function FormInputs({
                     )}
                 />
             ) : (
-                <p className="user-display-form-text">
-                    {form.getValues(name)}
-                </p>
+                <p className="user-display-form-text">{form.getValues(name)}</p>
             )}
         </div>
     );

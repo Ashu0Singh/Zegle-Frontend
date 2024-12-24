@@ -58,6 +58,7 @@ export function SocketProvider({ children }: { children: ReactNode }) {
                 setPartnerName(null);
                 setRoomID(null);
                 setIsConnected(false);
+                setMessages([]);
                 closePeerConnection(remoteVideoRef);
             });
 
@@ -116,6 +117,7 @@ export function SocketProvider({ children }: { children: ReactNode }) {
                         setIsConnected,
                         setRoomID,
                         setPartnerName,
+                        setMessages,
                     },
                     remoteVideoRef,
                     findPartner,
@@ -135,6 +137,7 @@ export function SocketProvider({ children }: { children: ReactNode }) {
             setIsConnected(false);
             setRoomID(null);
             setPartnerName(null);
+            setMessages([]);
             closePeerConnection(remoteVideoRef);
         }
         socketConnection && socketConnection?.emit("find_partner", userData);
@@ -146,6 +149,7 @@ export function SocketProvider({ children }: { children: ReactNode }) {
             setIsConnected(false);
             setRoomID(null);
             setPartnerName(null);
+            setMessages([]);
             closePeerConnection(remoteVideoRef);
         } else if (!isConnected) {
             socket?.disconnect();

@@ -1,12 +1,11 @@
 import { Socket } from "socket.io-client";
 import { UserData } from "@/utils/types";
 import {
-    addAnswer,
     closePeerConnection,
     getPeerConnection,
-    getPeerConnectionAnswer,
     getPeerConnectionOffer,
 } from "@/utils/peer";
+import { getRandomInt } from "./utils";
 
 export const setupMediaStream = async (
     localVideoRef: React.RefObject<HTMLVideoElement>,
@@ -80,6 +79,7 @@ export const disconnectChat = (
         setIsConnected: (connected: boolean) => void;
         setRoomID: (id: string | null) => void;
         setPartnerName: (name: string | null) => void;
+        setMessages: React.Dispatch<React.SetStateAction<any[]>>;
     },
     remoteVideoRef: React.RefObject<HTMLVideoElement>,
     findPartner: (userData: UserData, socket: Socket) => void,
@@ -89,6 +89,7 @@ export const disconnectChat = (
     setStates.setIsConnected(false);
     setStates.setRoomID(null);
     setStates.setPartnerName(null);
+    setStates.setMessages([]);
     closePeerConnection(remoteVideoRef);
-    findPartner(userData, socket);
+    setTimeout(() => findPartner(userData, socket), getRandomInt(1000));
 };

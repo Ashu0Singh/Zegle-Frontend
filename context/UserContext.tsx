@@ -1,5 +1,5 @@
 "use client";
-import { generateUUID } from "@/utils/generateUUID.js";
+import { generateUUID, getRandomInt } from "@/utils/utils.js";
 import axios from "@/utils/axios.js";
 import { createContext, ReactNode, useEffect, useState } from "react";
 import { UserContextType, UserData } from "@/utils/types";

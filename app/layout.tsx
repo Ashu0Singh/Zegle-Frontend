@@ -8,6 +8,8 @@ import { GeistSans } from "geist/font/sans";
 import { UserProvider } from "@/context/UserContext";
 import { Toaster } from "@/components/ui/toaster";
 import { SocketProvider } from "@/context/SocketContext";
+import { Analytics } from "@vercel/analytics/react";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 export const metadata: Metadata = {
     title: meta.title,
@@ -35,6 +37,8 @@ export default function RootLayout({
                         </ThemeProvider>
                     </SocketProvider>
                 </UserProvider>
+                <Analytics />
+                <SpeedInsights />
             </body>
         </html>
     );

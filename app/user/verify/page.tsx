@@ -4,12 +4,12 @@ import UserForm from "@/components/Form";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useRouter, useSearchParams } from "next/navigation";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import axios from "@/utils/axios.js";
 import { toast } from "@/hooks/use-toast";
 import { GeistMono } from "geist/font/mono";
 
-const page = () => {
+const Verify = () => {
     const searchQuery = useSearchParams();
     const token = searchQuery.get("token");
     const router = useRouter();
@@ -59,4 +59,10 @@ const page = () => {
     );
 };
 
-export default page;
+const VerifyPage = () => (
+    <Suspense fallback={<div>Loading...</div>}>
+        <Verify />
+    </Suspense>
+);
+
+export default VerifyPage;

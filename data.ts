@@ -16,9 +16,9 @@ export const NavbarRoutes = {
             text: "Chat",
             route: "/chat",
         },
-        {
-            text: "Pricing",
-            route: "/pricing",
-        },
+        // {
+        //     text: "Pricing",
+        //     route: "/pricing",
+        // },
     ],
 };

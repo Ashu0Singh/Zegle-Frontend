@@ -2,10 +2,10 @@ import { Socket } from "socket.io-client";
 
 export interface SocketContextType {
     socket: Socket | null;
-    partnerName: String | null;
+    partnerName: string | null;
     messages: Array<any>;
     messagesEndRef: React.RefObject<HTMLDivElement>;
-    roomID: String | null;
+    roomID: string | null;
     isConnected: boolean;
 
     localVideoRef: React.RefObject<HTMLVideoElement>;
@@ -43,14 +43,14 @@ export interface UserContextType {
 }
 
 export interface UserData {
-    username: String | undefined;
-    email: String | undefined;
-    firstname: String | undefined;
-    lastname: String | undefined;
-    avatar: String | undefined;
+    username: string | undefined;
+    email: string | undefined;
+    firstname: string | undefined;
+    lastname: string | undefined;
+    avatar: string | undefined;
     age: Number | null;
-    tier: String | undefined;
-    uuid: String | undefined;
+    tier: string | undefined;
+    uuid: string | undefined;
     verified: Boolean;
 }
 
@@ -59,15 +59,15 @@ export interface TextChatProps {
     socket: Socket | null;
     userData: UserData;
     findPartner: (userData: UserData, socketConnection: Socket) => void;
-    username: String;
-    partnerName: String | null;
+    username: string;
+    partnerName: string | null;
     messages: Array<any>;
     sendMessage: (message: string) => void;
 }
 
 export interface VideoChatProps {
     userData: UserData;
-    roomID: String | null;
+    roomID: string | null;
     localVideoRef: React.RefObject<HTMLVideoElement>;
     socket: Socket | null;
 

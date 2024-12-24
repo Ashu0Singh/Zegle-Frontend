@@ -24,7 +24,7 @@ interface NavbarNavigationProps {
     ) => void;
     mounted: boolean | undefined;
     isLoggedin: boolean;
-    firstname: String;
+    firstname: string;
 }
 
 export function Navbar() {

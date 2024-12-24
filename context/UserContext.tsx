@@ -43,16 +43,16 @@ export function UserProvider({ children }: { children: ReactNode }) {
         setUserData((prev) => ({ ...prev, uuid }));
     };
 
-    const setUserName = (username: String) => {
+    const setUserName = (username: string) => {
         if (username) setUserData((prev) => ({ ...prev, username }));
     };
-    const setEmail = (email: String) => {
+    const setEmail = (email: string) => {
         if (email) setUserData((prev) => ({ ...prev, email }));
     };
-    const setFirstName = (firstname: String) => {
+    const setFirstName = (firstname: string) => {
         if (firstname) setUserData((prev) => ({ ...prev, firstname }));
     };
-    const setLastName = (lastname: String) => {
+    const setLastName = (lastname: string) => {
         if (lastname) setUserData((prev) => ({ ...prev, lastname }));
     };
 

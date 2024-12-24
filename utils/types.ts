@@ -1,5 +1,4 @@
 import { Socket } from "socket.io-client";
-import Webcam from "react-webcam";
 
 export interface SocketContextType {
     socket: Socket | null;
@@ -35,6 +34,7 @@ export interface SocketContextType {
 
 export interface UserContextType {
     userData: UserData;
+    isLoggedin: boolean;
     setUserData: React.Dispatch<React.SetStateAction<UserData>>;
     setUserName: (username: string) => void;
     setEmail: (email: string) => void;
@@ -51,6 +51,7 @@ export interface UserData {
     age: Number | null;
     tier: String | undefined;
     uuid: String | undefined;
+    verified: Boolean;
 }
 
 export interface TextChatProps {

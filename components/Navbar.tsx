@@ -15,6 +15,7 @@ import {
 import { useIsMobile } from "@/hooks/use-mobile";
 import { usePathname } from "next/navigation";
 import { SocketContext } from "@/context/SocketContext";
+import { useUserContext } from "@/hooks/use-user";
 
 interface NavbarNavigationProps {
     theme: string | undefined;
@@ -22,12 +23,18 @@ interface NavbarNavigationProps {
         event: React.MouseEvent<HTMLButtonElement, MouseEvent>,
     ) => void;
     mounted: boolean | undefined;
+    isLoggedin: boolean;
+    firstname: String;
 }
 
 export function Navbar() {
     const { theme, setTheme } = useTheme();
     const [mounted, setMounted] = useState(false); // For client-side rendering
     const isMobile = useIsMobile();
+    const {
+        isLoggedin,
+        userData: { firstname },
+    } = useUserContext();
 
     const pathName = usePathname();
     const { socket } = useContext(SocketContext);
@@ -77,6 +84,8 @@ export function Navbar() {
                                 theme={theme}
                                 handleThemeChange={handleThemeChange}
                                 mounted={mounted}
+                                isLoggedin={isLoggedin}
+                                firstname={firstname}
                             />
                         </DialogContent>
                     </Dialog>
@@ -85,6 +94,8 @@ export function Navbar() {
                         theme={theme}
                         handleThemeChange={handleThemeChange}
                         mounted={mounted}
+                        isLoggedin={isLoggedin}
+                        firstname={firstname}
                     />
                 ))}
         </nav>
@@ -101,37 +112,58 @@ const NavbarNavigation: React.FC<NavbarNavigationProps> = (props) => {
                     </li>
                 ))}
             </ul>
-
-            <div className={`${GeistMono.className} navbar-navigation-buttons`}>
-                {props.mounted && (
-                    <Button
-                        className={`navbar-navigation-buttons-themeSwitch items-center space-x-2 bg-transparent hover:bg-transparent border-[1px] ${
-                            props.theme === "light" && "text-foreground"
-                        }`}
-                        onClick={props.handleThemeChange}
-                    >
-                        {props.theme === "dark" ? <Moon /> : <Sun />}
-                    </Button>
-                )}
-                <Link
-                    href="/user/login"
-                    className={
-                        buttonVariants({ variant: "default" }) +
-                        " navbar-navigation-buttons-login"
-                    }
+            {typeof props.isLoggedin !== "undefined" && (
+                <div
+                    className={`${GeistMono.className} navbar-navigation-buttons`}
                 >
-                    Login
-                </Link>
-                <Link
-                    href="/user/signup"
-                    className={
-                        buttonVariants({ variant: "default" }) +
-                        " navbar-navigation-buttons-signup"
-                    }
-                >
-                    Sign Up
-                </Link>
-            </div>
+                    {props.mounted && (
+                        <div className="flex items-center space-x-2">
+                            <Button
+                                className={`navbar-navigation-buttons-themeSwitch items-center space-x-2 bg-transparent hover:bg-transparent border-[1px] ${
+                                    props.theme === "light" && "text-foreground"
+                                }`}
+                                onClick={props.handleThemeChange}
+                            >
+                                {props.theme === "dark" ? <Moon /> : <Sun />}
+                            </Button>
+                            {props.isLoggedin && (
+                                <Link
+                                    href={"/user"}
+                                    className={
+                                        GeistMono.className +
+                                        buttonVariants({ variant: "default" }) +
+                                        " navbar-navigation-buttons-profile"
+                                    }
+                                >
+                                    {props.firstname.charAt(0).toUpperCase()}
+                                </Link>
+                            )}
+                        </div>
+                    )}
+                    {!props.isLoggedin && (
+                        <Link
+                            href="/user/login"
+                            className={
+                                buttonVariants({ variant: "default" }) +
+                                " navbar-navigation-buttons-login"
+                            }
+                        >
+                            Login
+                        </Link>
+                    )}
+                    {!props.isLoggedin && (
+                        <Link
+                            href="/user/signup"
+                            className={
+                                buttonVariants({ variant: "default" }) +
+                                " navbar-navigation-buttons-signup"
+                            }
+                        >
+                            Sign Up
+                        </Link>
+                    )}
+                </div>
+            )}
         </div>
     );
 };

@@ -16,8 +16,9 @@ export function UserProvider({ children }: { children: ReactNode }) {
         age: null,
         tier: "",
         uuid: "",
+        verified: false,
     });
-    const [isLoggedin, setIsLoggedin] = useState(false);
+    const [isLoggedin, setIsLoggedin] = useState<boolean | undefined>();
 
     useEffect(() => {
         if (typeof window === "undefined") return;
@@ -59,6 +60,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
         <UserContext.Provider
             value={{
                 userData,
+                isLoggedin,
                 setUserData,
                 setUserName,
                 setEmail,

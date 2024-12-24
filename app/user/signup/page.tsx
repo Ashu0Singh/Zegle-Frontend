@@ -60,6 +60,7 @@ const Signup = () => {
                 response?.data?.username &&
                     setUserName(response?.data?.username);
                 response?.data?.email && setEmail(response?.data?.email);
+                toast({ title: response?.data?.message });
                 router.push("/user");
             })
             .catch((error) => {

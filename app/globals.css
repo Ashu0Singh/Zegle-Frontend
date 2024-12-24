@@ -122,8 +122,16 @@ body {
         grid-area: login;
         width: 100%;
     }
+    .navbar-navigation-buttons-profile {
+        grid-area: login;
+        width: 100%;
+    }
 }
 
 .navbar-navigation-routes-link {
     @apply w-[80%] text-right sm:text-center border-b-[1px] sm:border-0;
+}
+
+.navbar-navigation-buttons-profile {
+    @apply align-middle text-center space-x-2 p-2 aspect-square bg-background text-foreground hover:text-background hover:bg-foreground border-[1px];
 }

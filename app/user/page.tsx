@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import axios from "@/utils/axios";
 import { toast } from "@/hooks/use-toast";
 import { Label } from "@/components/ui/label";
-import { useForm, UseFormReturn } from "react-hook-form";
+import { set, useForm, UseFormReturn } from "react-hook-form";
 import { Input } from "@/components/ui/input";
 import {
     Form,
@@ -20,6 +20,7 @@ import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
 import UserForm from "@/components/Form";
 import { GeistMono } from "geist/font/mono";
+import { CircleAlert, CircleCheck } from "lucide-react";
 
 const formSchema = z.object({
     firstname: z.string().trim().min(1, { message: "Firstname is required" }),
@@ -62,6 +63,7 @@ function preprocessStringToNumber(val: string) {
 const User = () => {
     const [isLoading, setIsLoading] = useState(true);
     const [isEditing, setIsEditing] = useState(false);
+    const [verified, setVerified] = useState(false);
     const router = useRouter();
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -100,6 +102,7 @@ const User = () => {
                 setIsLoading(false);
                 if (response?.data?.age === null) response.data.age = 0;
                 reset(response.data);
+                setVerified(response.data.verified);
                 return response.data;
             })
             .catch((error) => {
@@ -147,6 +150,7 @@ const User = () => {
                                 diasbled={true}
                                 label={"Email"}
                                 name={"email"}
+                                isVerfied={verified}
                                 isEditing={isEditing}
                             />
                             <div className="user-display-form-last">
@@ -189,6 +193,7 @@ function FormInputs({
     isEditing,
     type,
     diasbled,
+    isVerfied,
 }: {
     form: UseFormReturn<z.infer<typeof formSchema>>;
     label: string;
@@ -204,6 +209,7 @@ function FormInputs({
     isEditing: boolean;
     diasbled?: boolean;
     type?: string;
+    isVerfied?: boolean;
 }) {
     return (
         <div>
@@ -216,18 +222,28 @@ function FormInputs({
                         <FormItem>
                             <FormControl>
                                 <Input
+                                    className="overflow-hidden"
                                     disabled={diasbled || false}
                                     type={type || "text"}
                                     placeholder={label}
                                     {...field}
                                 />
                             </FormControl>
+
                             <FormMessage />
                         </FormItem>
                     )}
                 />
             ) : (
-                <p className="user-display-form-text">{form.getValues(name)}</p>
+                <p className="user-display-form-text flex justify-between">
+                    {form.getValues(name)}
+                    {name === "email" &&
+                        (isVerfied ? (
+                            <CircleCheck className="w-4 h-4 ml-2 text-green-500" />
+                        ) : (
+                            <CircleAlert className="w-4 h-4 ml-2 text-red-500" />
+                        ))}
+                </p>
             )}
         </div>
     );

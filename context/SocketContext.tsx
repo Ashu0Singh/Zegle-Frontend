@@ -149,14 +149,14 @@ export function SocketProvider({ children }: { children: ReactNode }) {
     };
 
     const stopChatting = () => {
-            closePeerConnection(remoteVideoRef);
-            socket?.disconnect();
-            setIsSearching(false);
-            setIsConnected(false);
-            setIsVideoConnected(false);
-            setRoomID(null);
-            setPartnerName(null);
-            setMessages([]);
+        closePeerConnection(remoteVideoRef);
+        socket?.disconnect();
+        setIsSearching(false);
+        setIsConnected(false);
+        setIsVideoConnected(false);
+        setRoomID(null);
+        setPartnerName(null);
+        setMessages([]);
     };
 
     const sendMessage = (message: string) => {

@@ -18,9 +18,9 @@ const Chat = () => {
         messagesEndRef,
         localVideoRef,
         remoteVideoRef,
-        
+
         socket,
-        
+
         stopChatting,
         sendMessage,
         findPartner,
@@ -31,17 +31,13 @@ const Chat = () => {
         <main className="chat">
             <VideoChat
                 userData={userData}
-
                 isSearching={isSearching}
                 isConnected={isConnected}
                 isVideoConnected={isVideoConnected}
-
                 socket={socket}
                 roomID={roomID}
-
                 localVideoRef={localVideoRef}
                 remoteVideoRef={remoteVideoRef}
-
                 findPartner={findPartner}
                 stopChatting={stopChatting}
             />
@@ -49,15 +45,11 @@ const Chat = () => {
                 username={userData.username ? userData.username : userData.uuid}
                 userData={userData}
                 partnerName={partnerName}
-                
                 isConnected={isConnected}
                 isSearching={isSearching}
-
                 socket={socket}
-
                 messagesEndRef={messagesEndRef}
                 messages={messages}
-
                 findPartner={findPartner}
                 sendMessage={sendMessage}
             />

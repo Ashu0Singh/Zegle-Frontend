@@ -67,7 +67,7 @@ export interface TextChatProps {
     isSearching: boolean;
 
     socket: Socket | null;
-    
+
     messagesEndRef: React.RefObject<HTMLDivElement>;
     messages: Array<any>;
 
@@ -87,7 +87,7 @@ export interface VideoChatProps {
 
     localVideoRef: React.RefObject<HTMLVideoElement>;
     remoteVideoRef: React.RefObject<HTMLVideoElement>;
-    
+
     stopChatting: () => void;
     findPartner: (userData: UserData, socketConnection: Socket) => void;
 }

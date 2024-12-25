@@ -2,7 +2,7 @@
 import "./chat.css";
 import VideoChat from "@/components/VideoChat";
 import TextChat from "@/components/TextChat";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { SocketContext } from "@/context/SocketContext";
 import { useUserContext } from "@/hooks/use-user";
 

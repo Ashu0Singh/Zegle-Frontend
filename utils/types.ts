@@ -7,6 +7,8 @@ export interface SocketContextType {
     messagesEndRef: React.RefObject<HTMLDivElement>;
     roomID: string | null;
     isConnected: boolean;
+    isSearching: boolean;
+    isVideoConnected: boolean;
 
     localVideoRef: React.RefObject<HTMLVideoElement>;
 
@@ -18,10 +20,12 @@ export interface SocketContextType {
         socketConnection: Socket,
         {
             setIsConnected,
+            setIsVideoConnected,
             setRoomID,
             setPartnerName,
         }: {
             setIsConnected: (connected: boolean) => void;
+            setIsVideoConnected: (connected: boolean) => void;
             setRoomID: (id: string | null) => void;
             setPartnerName: (name: string | null) => void;
         },

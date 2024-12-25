@@ -27,6 +27,7 @@ export function SocketProvider({ children }: { children: ReactNode }) {
     const [isConnected, setIsConnected] = useState(false);
     const [messages, setMessages] = useState([]);
     const [roomID, setRoomID] = useState<string | null>(null);
+    const [isVideoConnected, setIsVideoConnected] = useState(false);
 
     const messagesEndRef = useRef(null);
     const localVideoRef = useRef<HTMLVideoElement>(null);
@@ -58,6 +59,7 @@ export function SocketProvider({ children }: { children: ReactNode }) {
                 setPartnerName(null);
                 setRoomID(null);
                 setIsConnected(false);
+                setIsVideoConnected(false);
                 setMessages([]);
                 closePeerConnection(remoteVideoRef);
             });
@@ -104,6 +106,7 @@ export function SocketProvider({ children }: { children: ReactNode }) {
                         remoteVideoRef,
                         socketConnection,
                         roomID,
+                        setIsVideoConnected,
                     ),
             );
             socketConnection.on("receive_message", (messageData) =>
@@ -115,6 +118,7 @@ export function SocketProvider({ children }: { children: ReactNode }) {
                     socketConnection,
                     {
                         setIsConnected,
+                        setIsVideoConnected,
                         setRoomID,
                         setPartnerName,
                         setMessages,
@@ -135,6 +139,7 @@ export function SocketProvider({ children }: { children: ReactNode }) {
         if (isConnected && socketConnection) {
             socketConnection?.emit("disconnect_partner", { roomID });
             setIsConnected(false);
+            setIsVideoConnected(false);
             setRoomID(null);
             setPartnerName(null);
             setMessages([]);
@@ -147,6 +152,7 @@ export function SocketProvider({ children }: { children: ReactNode }) {
         if (socket && isConnected && roomID) {
             socket.disconnect();
             setIsConnected(false);
+            setIsVideoConnected(false);
             setRoomID(null);
             setPartnerName(null);
             setMessages([]);
@@ -170,6 +176,8 @@ export function SocketProvider({ children }: { children: ReactNode }) {
                 messages,
                 roomID,
                 isConnected,
+                isSearching,
+                isVideoConnected,
                 messagesEndRef,
                 localVideoRef,
                 remoteVideoRef,

@@ -27,6 +27,7 @@ export const handleIceCandidates = async (
     remoteVideoRef: React.RefObject<HTMLVideoElement>,
     socket: Socket,
     roomID: string | null,
+    setIsVideoConnected: (connected: boolean) => void,
 ) => {
     const peerConnection = await getPeerConnection(
         localVideoRef,
@@ -37,6 +38,7 @@ export const handleIceCandidates = async (
     if (candidate) {
         try {
             await peerConnection.addIceCandidate(candidate);
+            setIsVideoConnected(true);
         } catch (error) {
             console.error("Error adding ICE candidate:", error);
         }
@@ -77,6 +79,7 @@ export const disconnectChat = (
     socket: Socket,
     setStates: {
         setIsConnected: (connected: boolean) => void;
+        setIsVideoConnected: (connected: boolean) => void;
         setRoomID: (id: string | null) => void;
         setPartnerName: (name: string | null) => void;
         setMessages: React.Dispatch<React.SetStateAction<any[]>>;
@@ -87,6 +90,7 @@ export const disconnectChat = (
     console.log("Partner disconnected");
     remoteVideoRef.current.srcObject = null;
     setStates.setIsConnected(false);
+    setStates.setIsVideoConnected(false);
     setStates.setRoomID(null);
     setStates.setPartnerName(null);
     setStates.setMessages([]);

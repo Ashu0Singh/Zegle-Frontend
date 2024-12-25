@@ -1,7 +1,6 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import ZegleLogo from "@/app/ZegleLogo.png";
 import { GeistSans } from "geist/font/sans";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
@@ -9,6 +8,7 @@ import { NavbarRoutes } from "@/data";
 import Link from "next/link";
 import { toast } from "@/hooks/use-toast";
 import axios from "@/utils/axios";
+import ZegleLogo from "@/assets/images/zegle-logo.png";
 
 const Footer = () => {
     const [feedback, setFeedback] = React.useState({

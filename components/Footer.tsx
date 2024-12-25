@@ -8,7 +8,6 @@ import { NavbarRoutes } from "@/data";
 import Link from "next/link";
 import { toast } from "@/hooks/use-toast";
 import axios from "@/utils/axios";
-import ZegleLogo from "@/assets/images/zegle-logo.png";
 
 const Footer = () => {
     const [feedback, setFeedback] = React.useState({
@@ -55,7 +54,7 @@ const Footer = () => {
             <div className=" flex sm:flex-row flex-col p-10 gap-5 sm:gap-10">
                 <div className="flex flex-col gap-5">
                     <Image
-                        src={ZegleLogo}
+                        src="https://raw.githubusercontent.com/Ashu0Singh/Assets/refs/heads/main/zegle-logo.png"
                         alt="Zegle Logo"
                         width={100}
                         height={100}

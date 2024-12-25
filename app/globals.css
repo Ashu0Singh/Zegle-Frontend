@@ -3,7 +3,7 @@
 @tailwind utilities;
 
 body {
-    @apply h-dvh flex flex-col;
+    @apply h-dvh max-w-[1440px] mx-auto flex flex-col;
 }
 
 @layer base {
@@ -71,6 +71,10 @@ body {
         background-color var(--transition-duration),
         color var(--transition-duration);
 }
+
+/* h1{
+    @apply ;
+} */
 
 .zegle {
     @apply p-4 w-full;

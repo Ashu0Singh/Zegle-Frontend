@@ -1,7 +1,7 @@
 "use client";
 import Image from "next/image";
 import React from "react";
-import ZegleLogoWithBorder from "@/public/Zegle-Logo-withBorder.png";
+import ZegleLogo from "@/app/ZegleLogo.png";
 import { GeistSans } from "geist/font/sans";
 import { Input } from "./ui/input";
 import { Textarea } from "./ui/textarea";
@@ -55,7 +55,7 @@ const Footer = () => {
             <div className=" flex sm:flex-row flex-col p-10 gap-5 sm:gap-10">
                 <div className="flex flex-col gap-5">
                     <Image
-                        src={ZegleLogoWithBorder}
+                        src={ZegleLogo}
                         alt="Zegle Logo"
                         width={100}
                         height={100}

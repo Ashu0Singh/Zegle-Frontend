@@ -53,12 +53,14 @@ const Footer = () => {
         <div className="bg-black w-full h-fit text-white ">
             <div className=" flex sm:flex-row flex-col p-10 gap-5 sm:gap-10">
                 <div className="flex flex-col gap-5">
-                    <Image
-                        src="https://raw.githubusercontent.com/Ashu0Singh/Assets/refs/heads/main/zegle-logo.png"
-                        alt="Zegle Logo"
-                        width={100}
-                        height={100}
-                    />
+                    <Link href="/" className="text-white">
+                        <Image
+                            src="https://raw.githubusercontent.com/Ashu0Singh/Assets/refs/heads/main/zegle-logo.png"
+                            alt="Zegle Logo"
+                            width={100}
+                            height={100}
+                        />
+                    </Link>
                     <p className="text-sm sm:text-base text-gray-500 tracking-wide">
                         Hi there! Thanks for visiting Zegle. If you encounter
                         any issues or have suggestions to improve the

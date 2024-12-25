@@ -1,6 +1,9 @@
 import { GeistSans } from "geist/font/sans";
 import "./globals.css";
 import Footer from "@/components/Footer";
+import Link from "next/link";
+import { buttonVariants } from "@/components/ui/button";
+import { GeistMono } from "geist/font/mono";
 
 export default function Home() {
     return (
@@ -23,6 +26,12 @@ export default function Home() {
                         on meaningful conversations and exploration without
                         distractions.
                     </p>
+                    <Link
+                        href={"/chat"}
+                        className={`${GeistMono.className} ${buttonVariants({ variant: "outline" })} mx-auto`}
+                    >
+                        Start Chatting &rarr;
+                    </Link>
                 </div>
             </section>
             <Footer />

@@ -62,10 +62,10 @@ const TextChat = ({
         <section className="chat-text">
             <Card className="chat-text-chatbox">
                 <CardHeader className="chat-text-chatbox-header">
-                    <CardTitle>
+                    <CardTitle className="overflow-hidden">
                         {partnerName ? partnerName : "Finding a partner"}
                     </CardTitle>
-                    <EllipsisVerticalIcon />
+                    {/* <EllipsisVerticalIcon /> */}
                 </CardHeader>
                 <CardContent className="chat-text-chatbox-chatbox pb-0">
                     <div className="flex flex-col gap-2 h-fit pt-2 mb-2">

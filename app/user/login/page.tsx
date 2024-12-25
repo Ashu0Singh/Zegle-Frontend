@@ -58,7 +58,6 @@ const Login = () => {
                 router.push("/user");
             })
             .catch((error) => {
-                console.log(error);
                 toast({
                     title: error?.response?.data?.error,
                 });

@@ -59,25 +59,35 @@ export interface UserData {
 }
 
 export interface TextChatProps {
-    messagesEndRef: React.RefObject<HTMLDivElement>;
-    socket: Socket | null;
     userData: UserData;
-    findPartner: (userData: UserData, socketConnection: Socket) => void;
-    username: string;
     partnerName: string | null;
+    username: string;
+
+    isConnected: boolean;
+    isSearching: boolean;
+
+    socket: Socket | null;
+    
+    messagesEndRef: React.RefObject<HTMLDivElement>;
     messages: Array<any>;
+
+    findPartner: (userData: UserData, socketConnection: Socket) => void;
     sendMessage: (message: string) => void;
 }
 
 export interface VideoChatProps {
     userData: UserData;
-    roomID: string | null;
-    localVideoRef: React.RefObject<HTMLVideoElement>;
-    socket: Socket | null;
 
+    isSearching: boolean;
     isConnected: boolean;
+    isVideoConnected: boolean;
 
+    socket: Socket | null;
+    roomID: string | null;
+
+    localVideoRef: React.RefObject<HTMLVideoElement>;
     remoteVideoRef: React.RefObject<HTMLVideoElement>;
+    
     stopChatting: () => void;
     findPartner: (userData: UserData, socketConnection: Socket) => void;
 }

@@ -87,7 +87,6 @@ export const disconnectChat = (
     remoteVideoRef: React.RefObject<HTMLVideoElement>,
     findPartner: (userData: UserData, socket: Socket) => void,
 ) => {
-    console.log("Partner disconnected");
     remoteVideoRef.current.srcObject = null;
     setStates.setIsConnected(false);
     setStates.setIsVideoConnected(false);

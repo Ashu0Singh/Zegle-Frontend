@@ -12,13 +12,16 @@ const Chat = () => {
         messages,
         roomID,
         isConnected,
-        stopChatting,
+        isSearching,
+        isVideoConnected,
+
         messagesEndRef,
         localVideoRef,
         remoteVideoRef,
-
+        
         socket,
-
+        
+        stopChatting,
         sendMessage,
         findPartner,
     } = useContext(SocketContext);
@@ -27,24 +30,36 @@ const Chat = () => {
     return (
         <main className="chat">
             <VideoChat
+                userData={userData}
+
+                isSearching={isSearching}
+                isConnected={isConnected}
+                isVideoConnected={isVideoConnected}
+
                 socket={socket}
                 roomID={roomID}
+
                 localVideoRef={localVideoRef}
                 remoteVideoRef={remoteVideoRef}
+
                 findPartner={findPartner}
-                userData={userData}
                 stopChatting={stopChatting}
-                isConnected={isConnected}
             />
             <TextChat
-                messagesEndRef={messagesEndRef}
-                socket={socket}
-                findPartner={findPartner}
-                userData={userData}
                 username={userData.username ? userData.username : userData.uuid}
-                sendMessage={sendMessage}
+                userData={userData}
                 partnerName={partnerName}
+                
+                isConnected={isConnected}
+                isSearching={isSearching}
+
+                socket={socket}
+
+                messagesEndRef={messagesEndRef}
                 messages={messages}
+
+                findPartner={findPartner}
+                sendMessage={sendMessage}
             />
         </main>
     );

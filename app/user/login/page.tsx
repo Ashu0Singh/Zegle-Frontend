@@ -35,7 +35,8 @@ const formSchema = z.object({
 
 const Login = () => {
     const { toast } = useToast();
-    const { setEmail, setUserName } = useUserContext();
+    const { setEmail, setUserName, setIsLoggedin, setFirstName } =
+        useUserContext();
     const router = useRouter();
 
     const form = useForm<z.infer<typeof formSchema>>({
@@ -55,6 +56,9 @@ const Login = () => {
                 response?.data?.username &&
                     setUserName(response?.data?.username);
                 response?.data?.email && setEmail(response?.data?.email);
+                response?.data?.firstname &&
+                    setFirstName(response?.data?.firstname);
+                setIsLoggedin(true);
                 router.push("/user");
             })
             .catch((error) => {

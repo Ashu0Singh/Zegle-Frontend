@@ -25,11 +25,12 @@ interface NavbarNavigationProps {
     mounted: boolean | undefined;
     isLoggedin: boolean;
     firstname: string;
+    classname?: string;
 }
 
 export function Navbar() {
     const { theme, setTheme } = useTheme();
-    const [mounted, setMounted] = useState(false); // For client-side rendering
+    const [mounted, setMounted] = useState(false);
     const isMobile = useIsMobile();
     const {
         isLoggedin,
@@ -59,8 +60,6 @@ export function Navbar() {
         }, 1000);
     };
 
-    // if (!mounted) return null;
-
     return (
         <nav className="navbar">
             <div className="navbar-zegle">
@@ -72,23 +71,13 @@ export function Navbar() {
             </div>
             {typeof isMobile !== "undefined" &&
                 (isMobile ? (
-                    <Dialog>
-                        <DialogTrigger asChild className="cursor-pointer">
-                            <Menu />
-                        </DialogTrigger>
-                        <DialogContent className="sm:max-w-[425px] border-[1px]">
-                            <DialogTitle className="text-center">
-                                Menu
-                            </DialogTitle>
-                            <NavbarNavigation
-                                theme={theme}
-                                handleThemeChange={handleThemeChange}
-                                mounted={mounted}
-                                isLoggedin={isLoggedin}
-                                firstname={firstname}
-                            />
-                        </DialogContent>
-                    </Dialog>
+                    <MobileNavbar
+                        theme={theme}
+                        handleThemeChange={handleThemeChange}
+                        mounted={mounted}
+                        isLoggedin={isLoggedin}
+                        firstname={firstname}
+                    />
                 ) : (
                     <NavbarNavigation
                         theme={theme}
@@ -104,7 +93,7 @@ export function Navbar() {
 
 const NavbarNavigation: React.FC<NavbarNavigationProps> = (props) => {
     return (
-        <div className="navbar-navigation ">
+        <div className={`navbar-navigation ${props?.classname}`}>
             <ul className="navbar-navigation-routes">
                 {NavbarRoutes.routes.map((route, index) => (
                     <li key={index} className="navbar-navigation-routes-link">
@@ -117,35 +106,31 @@ const NavbarNavigation: React.FC<NavbarNavigationProps> = (props) => {
                     className={`${GeistMono.className} navbar-navigation-buttons`}
                 >
                     {props.mounted && (
-                        <div className="flex items-center space-x-2">
-                            <Button
-                                className={`navbar-navigation-buttons-themeSwitch items-center space-x-2 bg-transparent hover:bg-transparent border-[1px] ${
-                                    props.theme === "light" && "text-foreground"
-                                }`}
-                                onClick={props.handleThemeChange}
-                            >
-                                {props.theme === "dark" ? <Moon /> : <Sun />}
-                            </Button>
-                            {props.isLoggedin && (
-                                <Link
-                                    href={"/user"}
-                                    className={
-                                        GeistMono.className +
-                                        buttonVariants({ variant: "default" }) +
-                                        " navbar-navigation-buttons-profile"
-                                    }
-                                >
-                                    {props.firstname.charAt(0).toUpperCase()}
-                                </Link>
-                            )}
-                        </div>
+                        <Button
+                            className={`navbar-navigation-buttons-themeSwitch ${
+                                props.theme === "light" && "text-foreground"
+                            }`}
+                            onClick={props.handleThemeChange}
+                        >
+                            {props.theme === "dark" ? <Moon /> : <Sun />}
+                        </Button>
+                    )}
+                    {props.isLoggedin && (
+                        <Link
+                            href={"/user"}
+                            className={
+                                GeistMono.className +
+                                buttonVariants({ variant: "outline" })
+                            }
+                        >
+                            {props.firstname.charAt(0).toUpperCase()}
+                        </Link>
                     )}
                     {!props.isLoggedin && (
                         <Link
                             href="/user/login"
                             className={
-                                buttonVariants({ variant: "default" }) +
-                                " navbar-navigation-buttons-login"
+                                buttonVariants({ variant: "default" })
                             }
                         >
                             Login
@@ -155,8 +140,7 @@ const NavbarNavigation: React.FC<NavbarNavigationProps> = (props) => {
                         <Link
                             href="/user/signup"
                             className={
-                                buttonVariants({ variant: "default" }) +
-                                " navbar-navigation-buttons-signup"
+                                buttonVariants({ variant: "default" })
                             }
                         >
                             Sign Up
@@ -165,5 +149,67 @@ const NavbarNavigation: React.FC<NavbarNavigationProps> = (props) => {
                 </div>
             )}
         </div>
+    );
+};
+
+const MobileNavbar: React.FC<NavbarNavigationProps> = ({
+    theme,
+    handleThemeChange,
+    mounted,
+    isLoggedin,
+    firstname,
+}) => {
+    return (
+        <Dialog>
+            <DialogTrigger asChild className="cursor-pointer">
+                <Menu />
+            </DialogTrigger>
+            <DialogContent className="sm:max-w-[425px] border-[1px] gap-4">
+                <DialogTitle className="text-left text-3xl text-gray-500 sr-only">
+                    Navigation
+                </DialogTitle>
+                {NavbarRoutes.routes.map((route, index) => (
+                    <Link
+                        key={index}
+                        className="navbar-mobile-navigation-text"
+                        href={route.route}
+                    >
+                        {route.text}
+                    </Link>
+                ))}
+                {!isLoggedin && (
+                    <Link
+                        href="/user/login"
+                        className={"navbar-mobile-navigation-text"}
+                    >
+                        Login
+                    </Link>
+                )}
+                {!isLoggedin && (
+                    <Link
+                        href="/user/signup"
+                        className={"navbar-mobile-navigation-text"}
+                    >
+                        Sign Up
+                    </Link>
+                )}
+                {isLoggedin && (
+                    <Link
+                        href={"/user"}
+                        className={"navbar-mobile-navigation-text"}
+                    >
+                        Account
+                    </Link>
+                )}
+                {mounted && (
+                    <Button
+                        className={`navbar-mobile-navigation-text p-6`}
+                        onClick={handleThemeChange}
+                    >
+                        {theme === "dark" ? "Dark Mode" : "Light Mode"}
+                    </Button>
+                )}
+            </DialogContent>
+        </Dialog>
     );
 };

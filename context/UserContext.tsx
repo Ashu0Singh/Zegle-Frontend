@@ -61,6 +61,7 @@ export function UserProvider({ children }: { children: ReactNode }) {
             value={{
                 userData,
                 isLoggedin,
+                setIsLoggedin,
                 setUserData,
                 setUserName,
                 setEmail,

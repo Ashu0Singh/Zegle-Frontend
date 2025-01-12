@@ -39,6 +39,7 @@ export interface SocketContextType {
 export interface UserContextType {
     userData: UserData;
     isLoggedin: boolean;
+    setIsLoggedin: React.Dispatch<React.SetStateAction<boolean>>;
     setUserData: React.Dispatch<React.SetStateAction<UserData>>;
     setUserName: (username: string) => void;
     setEmail: (email: string) => void;

@@ -72,10 +72,6 @@ body {
         color var(--transition-duration);
 }
 
-/* h1{
-    @apply ;
-} */
-
 .zegle {
     @apply p-4 w-full;
 }
@@ -105,37 +101,14 @@ body {
     @apply flex flex-col sm:flex-row items-center gap-6 text-sm font-bold sm:font-normal xl:gap-8 w-full sm:w-min;
 }
 
-@media only screen and (max-width: 640px) {
-    .navbar-navigation-buttons {
-        display: grid;
-        width: 80%;
-        gap: 0.5rem;
-        grid-template-areas:
-            "switch switch signup signup"
-            "login login login login";
-    }
-    .navbar-navigation-buttons-themeSwitch {
-        grid-area: switch;
-        width: 100%;
-    }
-    .navbar-navigation-buttons-signup {
-        grid-area: signup;
-        width: 100%;
-    }
-    .navbar-navigation-buttons-login {
-        grid-area: login;
-        width: 100%;
-    }
-    .navbar-navigation-buttons-profile {
-        grid-area: login;
-        width: 100%;
-    }
-}
-
 .navbar-navigation-routes-link {
     @apply w-[80%] text-right sm:text-center border-b-[1px] sm:border-0;
 }
 
-.navbar-navigation-buttons-profile {
-    @apply align-middle text-center space-x-2 p-2 aspect-square bg-background text-foreground hover:text-background hover:bg-foreground border-[1px];
+.navbar-navigation-buttons-themeSwitch {
+    @apply items-center space-x-2 bg-transparent hover:bg-transparent border-[1px];
+}
+
+.navbar-mobile-navigation-text {
+    @apply text-left text-3xl opacity-85 font-extrabold;
 }

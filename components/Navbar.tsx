@@ -129,9 +129,7 @@ const NavbarNavigation: React.FC<NavbarNavigationProps> = (props) => {
                     {!props.isLoggedin && (
                         <Link
                             href="/user/login"
-                            className={
-                                buttonVariants({ variant: "default" })
-                            }
+                            className={buttonVariants({ variant: "default" })}
                         >
                             Login
                         </Link>
@@ -139,9 +137,7 @@ const NavbarNavigation: React.FC<NavbarNavigationProps> = (props) => {
                     {!props.isLoggedin && (
                         <Link
                             href="/user/signup"
-                            className={
-                                buttonVariants({ variant: "default" })
-                            }
+                            className={buttonVariants({ variant: "default" })}
                         >
                             Sign Up
                         </Link>

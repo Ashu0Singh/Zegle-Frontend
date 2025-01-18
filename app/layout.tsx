@@ -24,7 +24,7 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
-            <GoogleTagManager gtmId="GT-TBV9QFFG" />
+            <GoogleTagManager gtmId="GTM-M4SCBTCV" />
 
             <body className={`${GeistSans.className} antialiased`}>
                 <UserProvider>

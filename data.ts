@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 
 export const meta: Metadata = {
-    title: "Zegle: Omegle but Ad-Free",
+    title: "Zegle - Ad-Free Anonymous Video Chat | Better Alternative to Omegle",
     description:
-        "Zegle is a platform that is inspired by the idea of Omegle, except is has better UI and works towards getting rid of ads",
+        "Experience instant, ad-free video chat with a sleek UI. No sign-ups, no ads—just anonymous conversations. Chat better with Zegle",
 };
 
 export const NavbarRoutes = {

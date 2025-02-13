@@ -11,13 +11,27 @@ export const setupMediaStream = async (
     localVideoRef: React.RefObject<HTMLVideoElement>,
 ) => {
     try {
+        if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
+            throw new Error(
+                "getUserMedia is not supported on this device/browser.",
+            );
+        }
+
         const stream = await navigator.mediaDevices.getUserMedia({
-            video: true,
+            video: {
+                frameRate: { ideal: 30, max: 30 },
+            },
             audio: true,
         });
-        if (localVideoRef.current) localVideoRef.current.srcObject = stream;
+
+        if (localVideoRef.current) {
+            localVideoRef.current.srcObject = stream;
+        }
     } catch (error) {
         console.error("Media setup error:", error);
+        alert(
+            "Error accessing camera. Ensure you allow permissions and use a supported browser.",
+        );
     }
 };
 

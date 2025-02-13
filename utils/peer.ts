@@ -74,6 +74,16 @@ export const getPeerConnectionAnswer = async (
     offer,
 ) => {
     await getPeerConnection(localVideoRef, remoteVideoRef, socket, roomID);
+
+    const [videoSender] = peerConnection
+        .getSenders()
+        .filter((s) => s?.track?.kind === "video");
+    if (videoSender.RTCRtpParameters) {
+        videoSender?.setParameters({
+            encodings: [{ maxBitrate: 3000000 }],
+        });
+    }
+
     await peerConnection.setRemoteDescription(offer);
     const answer = await peerConnection.createAnswer();
     await peerConnection.setLocalDescription(answer);

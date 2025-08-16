@@ -75,7 +75,7 @@ const TextChat = ({
                 </CardContent>
                 <CardFooter className="chat-text-chatbox-footer">
                     <Input
-                        className="border-0 flex-grow shadow-none"
+                        className="border-0 flex-grow shadow-none text-inherit"
                         name="message"
                         value={message}
                         onChange={(e) => setMessage(e.target.value)}

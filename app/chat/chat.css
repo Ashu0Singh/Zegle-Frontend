@@ -25,11 +25,11 @@
 }
 
 .chat-text {
-    @apply h-full w-full;
+    @apply h-full w-full text-xl;
 }
 
 .chat-text-chatbox {
-    @apply h-full w-full flex flex-col;
+    @apply h-full w-full text-base flex flex-col;
 }
 
 .chat-text-chatbox-header {
@@ -37,11 +37,11 @@
 }
 
 .chat-text-chatbox-chatbox {
-    @apply flex-grow h-[50vh] overflow-y-scroll content-end;
+    @apply flex-grow h-[50vh] text-lg overflow-y-scroll content-end;
 }
 
 .chat-text-chatbox-footer {
-    @apply p-2 border-t-[1px] flex gap-2;
+    @apply p-2 border-t-[1px] text-lg flex gap-2;
 }
 .lucide-ellipsis-vertical {
     margin-top: 0px !important;

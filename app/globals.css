@@ -75,11 +75,11 @@ body {
 }
 
 .zegle-header {
-    @apply text-2xl text-primary font-bold;
+    @apply text-3xl text-primary font-bold;
 }
 
 .zegle-subtext {
-    @apply text-xs;
+    @apply text-sm;
 }
 
 .navbar,
@@ -98,7 +98,7 @@ body {
 }
 
 .navbar-navigation-routes {
-    @apply flex flex-col sm:flex-row items-center gap-6 text-sm font-bold sm:font-normal xl:gap-8 w-full sm:w-min;
+    @apply flex flex-col sm:flex-row items-center gap-6 text-base font-bold sm:font-normal xl:gap-8 w-full sm:w-min;
 }
 
 .navbar-navigation-routes-link {
@@ -110,5 +110,5 @@ body {
 }
 
 .navbar-mobile-navigation-text {
-    @apply text-left text-3xl opacity-85 font-extrabold;
+    @apply text-left text-2xl opacity-85 font-extrabold;
 }

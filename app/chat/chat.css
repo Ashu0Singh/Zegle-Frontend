@@ -13,7 +13,7 @@
 }
 
 .chat-video-window {
-    @apply aspect-[4/3] relative overflow-clip;
+    @apply aspect-[4/3] relative overflow-clip h-[100%];
 }
 
 .chat-video-window-buttons {

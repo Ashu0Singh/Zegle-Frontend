@@ -6,6 +6,11 @@ body {
     @apply h-dvh max-w-[1440px] mx-auto flex flex-col;
 }
 
+html,
+body {
+    height: 100%;
+}
+
 @layer base {
     :root {
         --background: 243.4 0% 95%;
